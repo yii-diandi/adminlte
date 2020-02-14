@@ -3,9 +3,7 @@
   "description": "AdminLTE资源包",
   "homepage": "https://github.com/yii-diandi/adminlte",
   "keywords": [
-    "admin",
-    "adminlte",
-    "yii"
+    "adminlte"
   ],
   "authors": [
     {
