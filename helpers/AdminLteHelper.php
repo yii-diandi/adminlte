@@ -16,7 +16,7 @@ class AdminLteHelper
     public static function skinClass()
     {
         /** @var \dmstr\web\AdminLteAsset $bundle */
-        $bundle = Yii::$app->assetManager->getBundle('dmstr\web\AdminLteAsset');
+        $bundle = Yii::$app->assetManager->getBundle('diandi\web\AdminLteAsset');
         return $bundle->skin;
     }
 }

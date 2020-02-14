@@ -2,7 +2,7 @@
     "name": "yii-diandi/adminlte",
     "description": "yii后台前端框架",
     "type": "yii2-extension",
-    "keywords": ["yii2","extension","adminlte","admin后台"],
+    "keywords": ["yii2","extension","adminltes","admin后台"],
     "license": "MIT",
     "authors": [
         {
