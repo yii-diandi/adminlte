@@ -12,8 +12,8 @@
     "theme",
     "web",
     "admin",
-    "adminlte"
-    "yii"
+    "adminlte",
+    "yii",
   ],
   "authors": [
     {
