@@ -2,9 +2,7 @@
   "name": "yii-diandi/adminlte",
   "description": "AdminLTE资源包",
   "homepage": "https://github.com/yii-diandi/adminlte",
-  "keywords": [
-    "adminlte"
-  ],
+  "keywords": ["adminlte","yii后台"],
   "authors": [
     {
       "name": "wangchunsheng",
@@ -14,5 +12,10 @@
   "license": "MIT",
   "support": {
     "issues": "https://github.com/yii-diandi/adminlte/issues"
-  }
+  },
+   "autoload": {
+        "psr-4": {
+            "diandi\\adminlte\\": ""
+        }
+    },
 }
