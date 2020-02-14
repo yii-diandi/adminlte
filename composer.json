@@ -2,16 +2,12 @@
   "name": "yii-diandi/adminlte",
   "description": "AdminLTE资源包",
   "type": "yii2-extension",
-  "homepage": "https://github.com/yii-diandi/adminlte",
   "keywords": ["adminlte", "yiiadminlte"],
   "authors": [{
     "name": "wangchunsheng",
     "email": "2192138785@qq.com"
   }],
   "license": "MIT",
-  "support": {
-    "issues": "https://github.com/yii-diandi/adminlte/issues"
-  },
   "autoload": {
     "psr-4": {
       "diandi\\adminlte\\": ""
