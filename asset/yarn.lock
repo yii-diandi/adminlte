@@ -2473,7 +2473,6 @@ request@~2.40.0:
     hawk "1.1.1"
     http-signature "~0.10.0"
     oauth-sign "~0.3.0"
-    stringstream "~0.0.4"
     tough-cookie ">=0.12.0"
     tunnel-agent "~0.4.0"
 
@@ -2664,14 +2663,6 @@ string_decoder@~0.10.x:
   version "0.10.31"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
 
-stringstream@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-1.0.0.tgz#2f0b37e8beae208166560e75700a656beb379ab6"
-  integrity sha512-qplWI1mgLqGLV2vMTHi6gvfsZxuOSTf5VLfX9k1n3D9vORh3lJnbjD0+cTQqH63Ed1TLcN30zaoMB+g0T7CJZw==
-
-stringstream@~0.0.4:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.5.tgz#4e484cd4de5a0bbbee18e46307710a8a81621878"
 
 strip-ansi@^0.3.0:
   version "0.3.0"
