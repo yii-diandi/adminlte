@@ -1,0 +1,28 @@
+{
+  "name": "yii-diandi/adminlte",
+  "description": "AdminLTE资源包",
+  "homepage": "https://github.com/yii-diandi/adminlte",
+  "keywords": [
+    "css",
+    "js",
+    "less",
+    "responsive",
+    "back-end",
+    "template",
+    "theme",
+    "web",
+    "admin",
+    "adminlte"
+    "yii"
+  ],
+  "authors": [
+    {
+      "name": "wangchunsheng",
+      "email": "2192138785@qq.com"
+    }
+  ],
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/yii-diandi/adminlte/issues"
+  }
+}
