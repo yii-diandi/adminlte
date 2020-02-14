@@ -1,12 +1,21 @@
 {
-  "name": "yii-diandi/adminlte",
-  "description": "AdminLTE资源包",
-  "type": "yii2-extension",
-  "keywords": ["adminlte", "yiiadminlte"],
-  "license": "MIT",
-  "autoload": {
-    "psr-4": {
-      "diandi\\adminlte\\": ""
+    "name": "yii-diandi/adminlte",
+    "description": "yii后台前端框架",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","adminlte","admin后台"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "wangchunsheng",
+            "email": "2192138785@qq.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "diandi\\adminlte\\": ""
+        }
     }
-  }
 }
