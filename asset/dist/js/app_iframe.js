@@ -1921,7 +1921,9 @@ var addTabs = function (options) {
 
     if (options.urlType === "relative") {
         // var url = window.location.protocol + '//' + window.location.host + "/";
-        var basePath = window.location.pathname + "/../";
+        // var basePath = window.location.pathname + "/../";
+        var basePath = "/backend/";
+
         options.url = basePath + options.url;
     }
 
