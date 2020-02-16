@@ -1,8 +1,8 @@
 {
-  "name": "AdminLTE",
-  "homepage": "http://almsaeedstudio.com",
+  "name": "yii-diandi/adminlte/asset",
+  "homepage": "https://github.com/yii-diandi/adminlte/",
   "authors": [
-    "Abdullah Almsaeed <abdullah@almsaeedstudio.com>"
+    "wangchunsheng <2192138785@qq.com>"
   ],
   "description": "Admin dashboard and control panel template",
   "main": [

@@ -1,7 +1,7 @@
 {
-  "name": "almasaeed2010/adminlte",
+  "name": "yii-diandi/adminlte/asset",
   "description": "AdminLTE - admin control panel and dashboard that's based on Bootstrap 3",
-  "homepage": "http://almsaeedstudio.com/",
+  "homepage": "https://github.com/yii-diandi/adminlte/",
   "keywords": [
     "css",
     "js",
@@ -15,12 +15,12 @@
   ],
   "authors": [
     {
-      "name": "Abdullah Almsaeed",
-      "email": "abdullah@almsaeedstudio.com"
+      "name": "wangchunsheng",
+      "email": "2192138785@qq.com"
     }
   ],
   "license": "MIT",
   "support": {
-    "issues": "https://github.com/almasaeed2010/AdminLTE/issues"
+    "issues": "https://github.com/yii-diandi/adminlte/issues"
   }
 }
