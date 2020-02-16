@@ -1,7 +1,7 @@
 /**
  Core script to handle the entire theme and core functions
  **/
-var App = function () {
+var App = function() {
 
     // IE mode
     var isRTL = false;
@@ -32,7 +32,7 @@ var App = function () {
     };
 
     // initializes main settings
-    var handleInit = function () {
+    var handleInit = function() {
 
         if ($('body').css('direction') === 'rtl') {
             isRTL = true;
@@ -52,7 +52,7 @@ var App = function () {
     };
 
     // runs callback functions set by App.addResponsiveHandler().
-    var _runResizeHandlers = function () {
+    var _runResizeHandlers = function() {
         // reinitialize other subscribed elements
         for (var i = 0; i < resizeHandlers.length; i++) {
             var each = resizeHandlers[i];
@@ -61,8 +61,8 @@ var App = function () {
     };
 
     //初始化iframe内容页高度
-    var handleIframeContent = function () {
-        var ht = $(window).height();//获取浏览器窗口的整体高度；
+    var handleIframeContent = function() {
+        var ht = $(window).height(); //获取浏览器窗口的整体高度；
 
         var $footer = $(".main-footer");
         var $header = $(".main-header");
@@ -83,15 +83,15 @@ var App = function () {
          });*/
     };
     //初始化内容页layout组件高度
-    var handleIframeLayoutHeight = function () {
+    var handleIframeLayoutHeight = function() {
 
         var height = App.getViewPort().height - $('.page-footer').outerHeight() - $('.page-header').outerHeight() - $(".content-tabs").height();
         // $("#layout").css({ "height": height });
         return height;
     };
 
-    var handleSiderBarmenu = function () {
-        jQuery('.page-sidebar-menu').on('click', ' li > a.iframeOpen', function (e) {
+    var handleSiderBarmenu = function() {
+        jQuery('.page-sidebar-menu').on('click', ' li > a.iframeOpen', function(e) {
             e.preventDefault();
             App.scrollTop();
             $("#iframe-main").attr("src", $(this).attr('href'));
@@ -100,7 +100,7 @@ var App = function () {
 
     var isFullScreen = false;
 
-    var requestFullScreen = function () {
+    var requestFullScreen = function() {
         var de = document.documentElement;
 
         if (de.requestFullscreen) {
@@ -109,23 +109,21 @@ var App = function () {
             de.mozRequestFullScreen();
         } else if (de.webkitRequestFullScreen) {
             de.webkitRequestFullScreen();
-        }
-        else {
-            App.alert({message: "该浏览器不支持全屏！", type: "danger"});
+        } else {
+            App.alert({ message: "该浏览器不支持全屏！", type: "danger" });
         }
 
     };
 
-    var requestFullScreen2 = function (element) {
+    var requestFullScreen2 = function(element) {
         // 判断各种浏览器，找到正确的方法
         var requestMethod = element.requestFullScreen || //W3C
-            element.webkitRequestFullScreen ||    //Chrome等
+            element.webkitRequestFullScreen || //Chrome等
             element.mozRequestFullScreen || //FireFox
             element.msRequestFullScreen; //IE11
         if (requestMethod) {
             requestMethod.call(element);
-        }
-        else if (typeof window.ActiveXObject !== "undefined") {//for Internet Explorer
+        } else if (typeof window.ActiveXObject !== "undefined") { //for Internet Explorer
             var wscript = new ActiveXObject("WScript.Shell");
             if (wscript !== null) {
                 wscript.SendKeys("{F11}");
@@ -134,16 +132,15 @@ var App = function () {
     };
 
     //退出全屏 判断浏览器种类
-    var exitFull = function () {
+    var exitFull = function() {
         // 判断各种浏览器，找到正确的方法
         var exitMethod = document.exitFullscreen || //W3C
-            document.mozCancelFullScreen ||    //Chrome等
+            document.mozCancelFullScreen || //Chrome等
             document.webkitExitFullscreen || //FireFox
             document.webkitExitFullscreen; //IE11
         if (exitMethod) {
             exitMethod.call(document);
-        }
-        else if (typeof window.ActiveXObject !== "undefined") {//for Internet Explorer
+        } else if (typeof window.ActiveXObject !== "undefined") { //for Internet Explorer
             var wscript = new ActiveXObject("WScript.Shell");
             if (wscript !== null) {
                 wscript.SendKeys("{F11}");
@@ -152,29 +149,29 @@ var App = function () {
     };
 
     // handle the layout reinitialization on window resize
-    var handleOnResize = function () {
+    var handleOnResize = function() {
         var resize;
         if (isIE8) {
             var currheight;
-            $(window).resize(function () {
+            $(window).resize(function() {
                 if (currheight == document.documentElement.clientHeight) {
                     return; //quite event since only body resized not window.
                 }
                 if (resize) {
                     clearTimeout(resize);
                 }
-                resize = setTimeout(function () {
+                resize = setTimeout(function() {
                     _runResizeHandlers();
                     handleIframeContent();
                 }, 50); // wait 50ms until window resize finishes.                
                 currheight = document.documentElement.clientHeight; // store last body client height
             });
         } else {
-            $(window).resize(function () {
+            $(window).resize(function() {
                 if (resize) {
                     clearTimeout(resize);
                 }
-                resize = setTimeout(function () {
+                resize = setTimeout(function() {
                     _runResizeHandlers();
                     handleIframeContent();
                 }, 50); // wait 50ms until window resize finishes.
@@ -183,9 +180,9 @@ var App = function () {
     };
 
     // Handles portlet tools & actions
-    var handlePortletTools = function () {
+    var handlePortletTools = function() {
         // handle portlet remove
-        $('body').on('click', '.portlet > .portlet-title > .tools > a.remove', function (e) {
+        $('body').on('click', '.portlet > .portlet-title > .tools > a.remove', function(e) {
             e.preventDefault();
             var portlet = $(this).closest(".portlet");
 
@@ -203,7 +200,7 @@ var App = function () {
         });
 
         // handle portlet fullscreen
-        $('body').on('click', '.portlet > .portlet-title .fullscreen', function (e) {
+        $('body').on('click', '.portlet > .portlet-title .fullscreen', function(e) {
             e.preventDefault();
             var portlet = $(this).closest(".portlet");
             if (portlet.hasClass('portlet-fullscreen')) {
@@ -224,7 +221,7 @@ var App = function () {
             }
         });
 
-        $('body').on('click', '.portlet > .portlet-title > .tools > a.reload', function (e) {
+        $('body').on('click', '.portlet > .portlet-title > .tools > a.reload', function(e) {
             e.preventDefault();
             var el = $(this).closest(".portlet").children(".portlet-body");
             var url = $(this).attr("data-url");
@@ -240,12 +237,12 @@ var App = function () {
                     cache: false,
                     url: url,
                     dataType: "html",
-                    success: function (res) {
+                    success: function(res) {
                         App.unblockUI(el);
                         el.html(res);
                         App.initAjax() // reinitialize elements & plugins for newly loaded content
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
+                    error: function(xhr, ajaxOptions, thrownError) {
                         App.unblockUI(el);
                         var msg = 'Error on reloading the content. Please check your connection and try again.';
                         if (error == "toastr" && toastr) {
@@ -268,7 +265,7 @@ var App = function () {
                     animate: true,
                     overlayColor: 'none'
                 });
-                window.setTimeout(function () {
+                window.setTimeout(function() {
                     App.unblockUI(el);
                 }, 1000);
             }
@@ -277,7 +274,7 @@ var App = function () {
         // load ajax data on page init
         $('.portlet .portlet-title a.reload[data-load="true"]').click();
 
-        $('body').on('click', '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand', function (e) {
+        $('body').on('click', '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand', function(e) {
             e.preventDefault();
             var el = $(this).closest(".portlet").children(".portlet-body");
             if ($(this).hasClass("collapse")) {
@@ -291,13 +288,13 @@ var App = function () {
     };
 
     // Handles custom checkboxes & radios using jQuery Uniform plugin
-    var handleUniform = function () {
+    var handleUniform = function() {
         if (!$().uniform) {
             return;
         }
         var test = $("input[type=checkbox]:not(.toggle, .md-check, .md-radiobtn, .make-switch, .icheck), input[type=radio]:not(.toggle, .md-check, .md-radiobtn, .star, .make-switch, .icheck)");
         if (test.size() > 0) {
-            test.each(function () {
+            test.each(function() {
                 if ($(this).parents(".checker").size() === 0) {
                     $(this).show();
                     $(this).uniform();
@@ -307,10 +304,10 @@ var App = function () {
     };
 
     // Handlesmaterial design checkboxes
-    var handleMaterialDesign = function () {
+    var handleMaterialDesign = function() {
 
         // Material design ckeckbox and radio effects
-        $('body').on('click', '.md-checkbox > label, .md-radio > label', function () {
+        $('body').on('click', '.md-checkbox > label, .md-radio > label', function() {
             var the = $(this);
             // find the first span which is our circle/bubble
             var el = $(this).children('span:first-child');
@@ -332,7 +329,7 @@ var App = function () {
             // Material design click effect
             // credit where credit's due; http://thecodeplayer.com/walkthrough/ripple-click-effect-google-material-design       
             var element, circle, d, x, y;
-            $('body').on('click', 'a.btn, button.btn, input.btn, label.btn', function (e) {
+            $('body').on('click', 'a.btn, button.btn, input.btn, label.btn', function(e) {
                 element = $(this);
 
                 if (element.find(".md-click-circle").length == 0) {
@@ -344,22 +341,22 @@ var App = function () {
 
                 if (!circle.height() && !circle.width()) {
                     d = Math.max(element.outerWidth(), element.outerHeight());
-                    circle.css({height: d, width: d});
+                    circle.css({ height: d, width: d });
                 }
 
                 x = e.pageX - element.offset().left - circle.width() / 2;
                 y = e.pageY - element.offset().top - circle.height() / 2;
 
-                circle.css({top: y + 'px', left: x + 'px'}).addClass("md-click-animate");
+                circle.css({ top: y + 'px', left: x + 'px' }).addClass("md-click-animate");
 
-                setTimeout(function () {
+                setTimeout(function() {
                     circle.remove();
                 }, 1000);
             });
         }
 
         // Floating labels
-        var handleInput = function (el) {
+        var handleInput = function(el) {
             if (el.val() != "") {
                 el.addClass('edited');
             } else {
@@ -367,14 +364,14 @@ var App = function () {
             }
         }
 
-        $('body').on('keydown', '.form-md-floating-label .form-control', function (e) {
+        $('body').on('keydown', '.form-md-floating-label .form-control', function(e) {
             handleInput($(this));
         });
-        $('body').on('blur', '.form-md-floating-label .form-control', function (e) {
+        $('body').on('blur', '.form-md-floating-label .form-control', function(e) {
             handleInput($(this));
         });
 
-        $('.form-md-floating-label .form-control').each(function () {
+        $('.form-md-floating-label .form-control').each(function() {
             if ($(this).val().length > 0) {
                 $(this).addClass('edited');
             }
@@ -382,12 +379,12 @@ var App = function () {
     };
 
     // Handles custom checkboxes & radios using jQuery iCheck plugin
-    var handleiCheck = function () {
+    var handleiCheck = function() {
         if (!$().iCheck) {
             return;
         }
 
-        $('.icheck').each(function () {
+        $('.icheck').each(function() {
             var checkboxClass = $(this).attr('data-checkbox') ? $(this).attr('data-checkbox') : 'icheckbox_minimal-grey';
             var radioClass = $(this).attr('data-radio') ? $(this).attr('data-radio') : 'iradio_minimal-grey';
 
@@ -407,7 +404,7 @@ var App = function () {
     };
 
     // Handles Bootstrap switches
-    var handleBootstrapSwitch = function () {
+    var handleBootstrapSwitch = function() {
         if (!$().bootstrapSwitch) {
             return;
         }
@@ -415,7 +412,7 @@ var App = function () {
     };
 
     // Handles Bootstrap confirmations
-    var handleBootstrapConfirmation = function () {
+    var handleBootstrapConfirmation = function() {
         if (!$().confirmation) {
             return;
         }
@@ -427,18 +424,18 @@ var App = function () {
     };
 
     // Handles Bootstrap Accordions.
-    var handleAccordions = function () {
-        $('body').on('shown.bs.collapse', '.accordion.scrollable', function (e) {
+    var handleAccordions = function() {
+        $('body').on('shown.bs.collapse', '.accordion.scrollable', function(e) {
             App.scrollTo($(e.target));
         });
     };
 
     // Handles Bootstrap Tabs.
-    var handleTabs = function () {
+    var handleTabs = function() {
         //activate tab if tab id provided in the URL
         if (location.hash) {
             var tabid = encodeURI(location.hash.substr(1));
-            $('a[href="#' + tabid + '"]').parents('.tab-pane:hidden').each(function () {
+            $('a[href="#' + tabid + '"]').parents('.tab-pane:hidden').each(function() {
                 var tabid = $(this).attr("id");
                 $('a[href="#' + tabid + '"]').click();
             });
@@ -453,9 +450,9 @@ var App = function () {
     };
 
     // Handles Bootstrap Modals.
-    var handleModals = function () {
+    var handleModals = function() {
         // fix stackable modal issue: when 2 or more modals opened, closing one of modal will remove .modal-open class. 
-        $('body').on('hide.bs.modal', function () {
+        $('body').on('hide.bs.modal', function() {
             if ($('.modal:visible').size() > 1 && $('html').hasClass('modal-open') === false) {
                 $('html').addClass('modal-open');
             } else if ($('.modal:visible').size() <= 1) {
@@ -464,25 +461,25 @@ var App = function () {
         });
 
         // fix page scrollbars issue
-        $('body').on('show.bs.modal', '.modal', function () {
+        $('body').on('show.bs.modal', '.modal', function() {
             if ($(this).hasClass("modal-scroll")) {
                 $('body').addClass("modal-open-noscroll");
             }
         });
 
         // fix page scrollbars issue
-        $('body').on('hide.bs.modal', '.modal', function () {
+        $('body').on('hide.bs.modal', '.modal', function() {
             $('body').removeClass("modal-open-noscroll");
         });
 
         // remove ajax content and remove cache on modal closed 
-        $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
+        $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function() {
             $(this).removeData('bs.modal');
         });
     };
 
     // Handles Bootstrap Tooltips.
-    var handleTooltips = function () {
+    var handleTooltips = function() {
         // global tooltips
         $('.tooltips').tooltip();
 
@@ -510,43 +507,43 @@ var App = function () {
     };
 
     // Handles Bootstrap Dropdowns
-    var handleDropdowns = function () {
+    var handleDropdowns = function() {
         /*
          Hold dropdown on click
          */
-        $('body').on('click', '.dropdown-menu.hold-on-click', function (e) {
+        $('body').on('click', '.dropdown-menu.hold-on-click', function(e) {
             e.stopPropagation();
         });
     };
 
-    var handleAlerts = function () {
-        $('body').on('click', '[data-close="alert"]', function (e) {
+    var handleAlerts = function() {
+        $('body').on('click', '[data-close="alert"]', function(e) {
             $(this).parent('.alert').hide();
             $(this).closest('.note').hide();
             e.preventDefault();
         });
 
-        $('body').on('click', '[data-close="note"]', function (e) {
+        $('body').on('click', '[data-close="note"]', function(e) {
             $(this).closest('.note').hide();
             e.preventDefault();
         });
 
-        $('body').on('click', '[data-remove="note"]', function (e) {
+        $('body').on('click', '[data-remove="note"]', function(e) {
             $(this).closest('.note').remove();
             e.preventDefault();
         });
     };
 
     // Handle Hower Dropdowns
-    var handleDropdownHover = function () {
-        $('[data-hover="dropdown"]').not('.hover-initialized').each(function () {
+    var handleDropdownHover = function() {
+        $('[data-hover="dropdown"]').not('.hover-initialized').each(function() {
             $(this).dropdownHover();
             $(this).addClass('hover-initialized');
         });
     };
 
     // Handle textarea autosize 
-    var handleTextareaAutosize = function () {
+    var handleTextareaAutosize = function() {
         if (typeof(autosize) == "function") {
             autosize(document.querySelector('textarea.autosizeme'));
         }
@@ -557,12 +554,12 @@ var App = function () {
     // last popep popover
     var lastPopedPopover;
 
-    var handlePopovers = function () {
+    var handlePopovers = function() {
         $('.popovers').popover();
 
         // close last displayed popover
 
-        $(document).on('click.bs.popover.data-api', function (e) {
+        $(document).on('click.bs.popover.data-api', function(e) {
             if (lastPopedPopover) {
                 lastPopedPopover.popover('hide');
             }
@@ -570,12 +567,12 @@ var App = function () {
     };
 
     // Handles scrollable contents using jQuery SlimScroll plugin.
-    var handleScrollers = function () {
+    var handleScrollers = function() {
         App.initSlimScroll('.scroller');
     };
 
     // Handles Image Preview using jQuery Fancybox plugin
-    var handleFancybox = function () {
+    var handleFancybox = function() {
         if (!jQuery.fancybox) {
             return;
         }
@@ -596,7 +593,7 @@ var App = function () {
     };
 
     // Handles counterup plugin wrapper
-    var handleCounterup = function () {
+    var handleCounterup = function() {
         if (!$().counterUp) {
             return;
         }
@@ -608,24 +605,24 @@ var App = function () {
     };
 
     // Fix input placeholder issue for IE8 and IE9
-    var handleFixInputPlaceholderForIE = function () {
+    var handleFixInputPlaceholderForIE = function() {
         //fix html5 placeholder attribute for ie7 & ie8
         if (isIE8 || isIE9) { // ie8 & ie9
             // this is html5 placeholder fix for inputs, inputs with placeholder-no-fix class will be skipped(e.g: we need this for password fields)
-            $('input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)').each(function () {
+            $('input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)').each(function() {
                 var input = $(this);
 
                 if (input.val() === '' && input.attr("placeholder") !== '') {
                     input.addClass("placeholder").val(input.attr('placeholder'));
                 }
 
-                input.focus(function () {
+                input.focus(function() {
                     if (input.val() == input.attr('placeholder')) {
                         input.val('');
                     }
                 });
 
-                input.blur(function () {
+                input.blur(function() {
                     if (input.val() === '' || input.val() == input.attr('placeholder')) {
                         input.val(input.attr('placeholder'));
                     }
@@ -635,7 +632,7 @@ var App = function () {
     };
 
     // Handle Select2 Dropdowns
-    var handleSelect2 = function () {
+    var handleSelect2 = function() {
         if ($().select2) {
             $.fn.select2.defaults.set("theme", "bootstrap");
             $('.select2me').select2({
@@ -647,15 +644,15 @@ var App = function () {
     };
 
     // handle group element heights
-    var handleHeight = function () {
-        $('[data-auto-height]').each(function () {
+    var handleHeight = function() {
+        $('[data-auto-height]').each(function() {
             var parent = $(this);
             var items = $('[data-height]', parent);
             var height = 0;
             var mode = parent.attr('data-mode');
             var offset = parseInt(parent.attr('data-offset') ? parent.attr('data-offset') : 0);
 
-            items.each(function () {
+            items.each(function() {
                 if ($(this).attr('data-height') == "height") {
                     $(this).css('height', '');
                 } else {
@@ -670,7 +667,7 @@ var App = function () {
 
             height = height + offset;
 
-            items.each(function () {
+            items.each(function() {
                 if ($(this).attr('data-height') == "height") {
                     $(this).css('height', height);
                 } else {
@@ -689,7 +686,7 @@ var App = function () {
     return {
 
         //main function to initiate the theme
-        init: function () {
+        init: function() {
             //IMPORTANT!!!: Do not modify the core handlers call order.
 
             //Core handlers
@@ -725,7 +722,7 @@ var App = function () {
         },
 
         //main function to initiate core javascript after ajax complete
-        initAjax: function () {
+        initAjax: function() {
             handleUniform(); // handles custom radio & checkboxes     
             handleiCheck(); // handles custom icheck radio and checkboxes
             handleBootstrapSwitch(); // handle bootstrap switch plugin
@@ -739,7 +736,7 @@ var App = function () {
             handleAccordions(); //handles accordions 
             handleBootstrapConfirmation(); // handle bootstrap confirmations
         },
-        handleFullScreen: function () {
+        handleFullScreen: function() {
             if (isFullScreen) {
                 exitFull();
                 isFullScreen = false;
@@ -748,39 +745,39 @@ var App = function () {
                 isFullScreen = true;
             }
         },
-        fixIframeTab: function () {
+        fixIframeTab: function() {
             handleIframeContent();
         },
-        getIframeLayoutHeight: function () {
+        getIframeLayoutHeight: function() {
             return handleIframeLayoutHeight();
         },
         //init main components 
-        initComponents: function () {
+        initComponents: function() {
             this.initAjax();
         },
-        fixIframeCotent: function () {
-            setTimeout(function () {
+        fixIframeCotent: function() {
+            setTimeout(function() {
                 //_runResizeHandlers();
                 handleIframeContent();
             }, 50);
         },
         //public function to remember last opened popover that needs to be closed on click
-        setLastPopedPopover: function (el) {
+        setLastPopedPopover: function(el) {
             lastPopedPopover = el;
         },
 
         //public function to add callback a function which will be called on window resize
-        addResizeHandler: function (func) {
+        addResizeHandler: function(func) {
             resizeHandlers.push(func);
         },
 
         //public functon to call _runresizeHandlers
-        runResizeHandlers: function () {
+        runResizeHandlers: function() {
             _runResizeHandlers();
         },
 
         // wrApper function to scroll(focus) to an element
-        scrollTo: function (el, offeset) {
+        scrollTo: function(el, offeset) {
             var pos = (el && el.size() > 0) ? el.offset().top : 0;
 
             if (el) {
@@ -799,8 +796,8 @@ var App = function () {
             }, 'slow');
         },
 
-        initSlimScroll: function (el) {
-            $(el).each(function () {
+        initSlimScroll: function(el) {
+            $(el).each(function() {
                 if ($(this).attr("data-initialized")) {
                     return; // exit
                 }
@@ -830,8 +827,8 @@ var App = function () {
             });
         },
 
-        destroySlimScroll: function (el) {
-            $(el).each(function () {
+        destroySlimScroll: function(el) {
+            $(el).each(function() {
                 if ($(this).attr("data-initialized") === "1") { // destroy existing instance before updating the height
                     $(this).removeAttr("data-initialized");
                     $(this).removeAttr("style");
@@ -863,7 +860,7 @@ var App = function () {
                     var the = $(this);
 
                     // reassign custom attributes
-                    $.each(attrList, function (key, value) {
+                    $.each(attrList, function(key, value) {
                         the.attr(key, value);
                     });
 
@@ -872,12 +869,12 @@ var App = function () {
         },
 
         // function to scroll to the top
-        scrollTop: function () {
+        scrollTop: function() {
             App.scrollTo();
         },
 
         // wrApper function to  block element(indicate loading)
-        blockUI: function (options) {
+        blockUI: function(options) {
             options = $.extend(true, {}, options);
             var html = '';
             if (options.animate) {
@@ -930,10 +927,10 @@ var App = function () {
         },
 
         // wrApper function to  un-block element(finish loading)
-        unblockUI: function (target) {
+        unblockUI: function(target) {
             if (target) {
                 $(target).unblock({
-                    onUnblock: function () {
+                    onUnblock: function() {
                         $(target).css('position', '');
                         $(target).css('zoom', '');
 
@@ -944,7 +941,7 @@ var App = function () {
             }
         },
 
-        startPageLoading: function (options) {
+        startPageLoading: function(options) {
             if (options && options.animate) {
                 $('.page-spinner-bar').remove();
                 $('body').append('<div class="page-spinner-bar"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
@@ -954,11 +951,11 @@ var App = function () {
             }
         },
 
-        stopPageLoading: function () {
+        stopPageLoading: function() {
             $('.page-loading, .page-spinner-bar').remove();
         },
 
-        alert: function (options) {
+        alert: function(options) {
 
             options = $.extend(true, {
                 container: "", // alerts parent container(by default placed after the page breadcrumbs)
@@ -1005,7 +1002,7 @@ var App = function () {
             }
 
             if (options.closeInSeconds > 0) {
-                setTimeout(function () {
+                setTimeout(function() {
                     $('#' + id).remove();
                 }, options.closeInSeconds * 1000);
             }
@@ -1014,9 +1011,9 @@ var App = function () {
         },
 
         // initializes uniform elements
-        initUniform: function (els) {
+        initUniform: function(els) {
             if (els) {
-                $(els).each(function () {
+                $(els).each(function() {
                     if ($(this).parents(".checker").size() === 0) {
                         $(this).show();
                         $(this).uniform();
@@ -1028,17 +1025,17 @@ var App = function () {
         },
 
         //wrApper function to update/sync jquery uniform checkbox & radios
-        updateUniform: function (els) {
+        updateUniform: function(els) {
             $.uniform.update(els); // update the uniform checkbox & radios UI after the actual input control state changed
         },
 
         //public function to initialize the fancybox plugin
-        initFancybox: function () {
+        initFancybox: function() {
             handleFancybox();
         },
 
         //public helper function to get actual input value(used in IE9 and IE8 due to placeholder attribute not supported)
-        getActualVal: function (el) {
+        getActualVal: function(el) {
             el = $(el);
             if (el.val() === el.attr("placeholder")) {
                 return "";
@@ -1047,7 +1044,7 @@ var App = function () {
         },
 
         //public function to get a paremeter by name from URL
-        getURLParameter: function (paramName) {
+        getURLParameter: function(paramName) {
             var searchString = window.location.search.substring(1),
                 i, val, params = searchString.split("&");
 
@@ -1061,7 +1058,7 @@ var App = function () {
         },
 
         // check for device touch support
-        isTouchDevice: function () {
+        isTouchDevice: function() {
             try {
                 document.createEvent("TouchEvent");
                 return true;
@@ -1071,7 +1068,7 @@ var App = function () {
         },
 
         // To get the correct viewport width based on  http://andylangton.co.uk/articles/javascript/get-viewport-size-javascript/
-        getViewPort: function () {
+        getViewPort: function() {
             var e = window,
                 a = 'inner';
             if (!('innerWidth' in window)) {
@@ -1085,60 +1082,60 @@ var App = function () {
             };
         },
 
-        getUniqueID: function (prefix) {
+        getUniqueID: function(prefix) {
             return 'prefix_' + Math.floor(Math.random() * (new Date()).getTime());
         },
 
         // check IE8 mode
-        isIE8: function () {
+        isIE8: function() {
             return isIE8;
         },
 
         // check IE9 mode
-        isIE9: function () {
+        isIE9: function() {
             return isIE9;
         },
 
         //check RTL mode
-        isRTL: function () {
+        isRTL: function() {
             return isRTL;
         },
 
         // check IE8 mode
-        isAngularJsApp: function () {
+        isAngularJsApp: function() {
             return (typeof angular == 'undefined') ? false : true;
         },
 
-        getbasePath: function () {
+        getbasePath: function() {
             return basePath;
         },
 
-        setbasePath: function (path) {
+        setbasePath: function(path) {
             basePath = path;
         },
 
-        setGlobalImgPath: function (path) {
+        setGlobalImgPath: function(path) {
             globalImgPath = path;
         },
 
-        getGlobalImgPath: function () {
+        getGlobalImgPath: function() {
             return basePath + globalImgPath;
         },
 
-        setGlobalPluginsPath: function (path) {
+        setGlobalPluginsPath: function(path) {
             globalPluginsPath = path;
         },
 
-        getGlobalPluginsPath: function () {
+        getGlobalPluginsPath: function() {
             return basePath + globalPluginsPath;
         },
 
-        getGlobalCssPath: function () {
+        getGlobalCssPath: function() {
             return basePath + globalCssPath;
         },
 
         // get layout color code by color name
-        getBrandColor: function (name) {
+        getBrandColor: function(name) {
             if (brandColors[name]) {
                 return brandColors[name];
             } else {
@@ -1146,13 +1143,13 @@ var App = function () {
             }
         },
 
-        getResponsiveBreakpoint: function (size) {
+        getResponsiveBreakpoint: function(size) {
             // bootstrap responsive breakpoints
             var sizes = {
-                'xs': 480,     // extra small
-                'sm': 768,     // small
-                'md': 992,     // medium
-                'lg': 1200     // large
+                'xs': 480, // extra small
+                'sm': 768, // small
+                'md': 992, // medium
+                'lg': 1200 // large
             };
 
             return sizes[size] ? sizes[size] : 0;
@@ -1161,7 +1158,7 @@ var App = function () {
 
 }();
 
-jQuery(document).ready(function () {
+jQuery(document).ready(function() {
     App.init(); // init metronic core componets
 });
 /*
@@ -1172,11 +1169,11 @@ jQuery(document).ready(function () {
  * Modified by Joshua Christman
  */
 
-context = (function () {
+context = (function() {
 
     var options = {
         fadeSpeed: 100,
-        filter: function ($obj) {
+        filter: function($obj) {
             // Modify $obj, Do not return
         },
         above: 'auto',
@@ -1189,17 +1186,17 @@ context = (function () {
 
         options = $.extend({}, options, opts);
 
-        $(document).on('click', function () {
-            $('.dropdown-context').fadeOut(options.fadeSpeed, function () {
-                $('.dropdown-context').css({display: ''}).find('.drop-left').removeClass('drop-left');
+        $(document).on('click', function() {
+            $('.dropdown-context').fadeOut(options.fadeSpeed, function() {
+                $('.dropdown-context').css({ display: '' }).find('.drop-left').removeClass('drop-left');
             });
         });
         if (options.preventDoubleContext) {
-            $(document).on('contextmenu', '.dropdown-context', function (e) {
+            $(document).on('contextmenu', '.dropdown-context', function(e) {
                 e.preventDefault();
             });
         }
-        $(document).on('mouseenter', '.dropdown-submenu', function () {
+        $(document).on('mouseenter', '.dropdown-submenu', function() {
             var $sub = $(this).find('.dropdown-context-sub:first'),
                 subWidth = $sub.width(),
                 subLeft = $sub.offset().left,
@@ -1310,7 +1307,7 @@ context = (function () {
         }
 
         //右键事件
-        $(selector).on('contextmenu', function (e) {
+        $(selector).on('contextmenu', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -1322,7 +1319,7 @@ context = (function () {
             $dd = $('#dropdown-' + id);
 
             $dd.find('.dynamic-menu-item').remove(); // Destroy any old dynamic menu items
-            $dd.find('.dynamic-menu-src').each(function (idx, element) {
+            $dd.find('.dynamic-menu-src').each(function(idx, element) {
                 var menuItems = window[$(element).data('src')]($(selector));
                 $parentMenu = $(element).closest('.dropdown-menu.dropdown-context');
                 $parentMenu = buildMenuItems($parentMenu, menuItems, id, undefined, true);
@@ -1377,9 +1374,9 @@ context = (function () {
     };
 })();
 
-var createCallback = function (func) {
-    return function (event) {
-        func(event, currentContextSelector,rightClickEvent)
+var createCallback = function(func) {
+    return function(event) {
+        func(event, currentContextSelector, rightClickEvent)
     };
 };
 
@@ -1395,469 +1392,437 @@ var rightClickEvent = undefined;
  */
 (function($) {
 
-  $.fn.extend({
-    slimScroll: function(options) {
+    $.fn.extend({
+        slimScroll: function(options) {
 
-      var defaults = {
+            var defaults = {
 
-        // width in pixels of the visible scroll area
-        width : 'auto',
+                // width in pixels of the visible scroll area
+                width: 'auto',
 
-        // height in pixels of the visible scroll area
-        height : '250px',
+                // height in pixels of the visible scroll area
+                height: '250px',
 
-        // width in pixels of the scrollbar and rail
-        size : '7px',
+                // width in pixels of the scrollbar and rail
+                size: '7px',
 
-        // scrollbar color, accepts any hex/color value
-        color: '#000',
+                // scrollbar color, accepts any hex/color value
+                color: '#000',
 
-        // scrollbar position - left/right
-        position : 'right',
+                // scrollbar position - left/right
+                position: 'right',
 
-        // distance in pixels between the side edge and the scrollbar
-        distance : '1px',
+                // distance in pixels between the side edge and the scrollbar
+                distance: '1px',
 
-        // default scroll position on load - top / bottom / $('selector')
-        start : 'top',
+                // default scroll position on load - top / bottom / $('selector')
+                start: 'top',
 
-        // sets scrollbar opacity
-        opacity : .4,
+                // sets scrollbar opacity
+                opacity: .4,
 
-        // enables always-on mode for the scrollbar
-        alwaysVisible : false,
+                // enables always-on mode for the scrollbar
+                alwaysVisible: false,
 
-        // check if we should hide the scrollbar when user is hovering over
-        disableFadeOut : false,
+                // check if we should hide the scrollbar when user is hovering over
+                disableFadeOut: false,
 
-        // sets visibility of the rail
-        railVisible : false,
+                // sets visibility of the rail
+                railVisible: false,
 
-        // sets rail color
-        railColor : '#333',
+                // sets rail color
+                railColor: '#333',
 
-        // sets rail opacity
-        railOpacity : .2,
+                // sets rail opacity
+                railOpacity: .2,
 
-        // whether  we should use jQuery UI Draggable to enable bar dragging
-        railDraggable : true,
+                // whether  we should use jQuery UI Draggable to enable bar dragging
+                railDraggable: true,
 
-        // defautlt CSS class of the slimscroll rail
-        railClass : 'slimScrollRail',
+                // defautlt CSS class of the slimscroll rail
+                railClass: 'slimScrollRail',
 
-        // defautlt CSS class of the slimscroll bar
-        barClass : 'slimScrollBar',
+                // defautlt CSS class of the slimscroll bar
+                barClass: 'slimScrollBar',
 
-        // defautlt CSS class of the slimscroll wrapper
-        wrapperClass : 'slimScrollDiv',
+                // defautlt CSS class of the slimscroll wrapper
+                wrapperClass: 'slimScrollDiv',
 
-        // check if mousewheel should scroll the window if we reach top/bottom
-        allowPageScroll : false,
+                // check if mousewheel should scroll the window if we reach top/bottom
+                allowPageScroll: false,
 
-        // scroll amount applied to each mouse wheel step
-        wheelStep : 20,
+                // scroll amount applied to each mouse wheel step
+                wheelStep: 20,
 
-        // scroll amount applied when user is using gestures
-        touchScrollStep : 200,
+                // scroll amount applied when user is using gestures
+                touchScrollStep: 200,
 
-        // sets border radius
-        borderRadius: '7px',
+                // sets border radius
+                borderRadius: '7px',
 
-        // sets border radius of the rail
-        railBorderRadius : '7px'
-      };
+                // sets border radius of the rail
+                railBorderRadius: '7px'
+            };
 
-      var o = $.extend(defaults, options);
+            var o = $.extend(defaults, options);
 
-      // do it for every element that matches selector
-      this.each(function(){
+            // do it for every element that matches selector
+            this.each(function() {
 
-      var isOverPanel, isOverBar, isDragg, queueHide, touchDif,
-        barHeight, percentScroll, lastScroll,
-        divS = '<div></div>',
-        minBarHeight = 30,
-        releaseScroll = false;
+                var isOverPanel, isOverBar, isDragg, queueHide, touchDif,
+                    barHeight, percentScroll, lastScroll,
+                    divS = '<div></div>',
+                    minBarHeight = 30,
+                    releaseScroll = false;
 
-        // used in event handlers and for better minification
-        var me = $(this);
+                // used in event handlers and for better minification
+                var me = $(this);
 
-        // ensure we are not binding it again
-        if (me.parent().hasClass(o.wrapperClass))
-        {
-            // start from last bar position
-            var offset = me.scrollTop();
+                // ensure we are not binding it again
+                if (me.parent().hasClass(o.wrapperClass)) {
+                    // start from last bar position
+                    var offset = me.scrollTop();
 
-            // find bar and rail
-            bar = me.siblings('.' + o.barClass);
-            rail = me.siblings('.' + o.railClass);
+                    // find bar and rail
+                    bar = me.siblings('.' + o.barClass);
+                    rail = me.siblings('.' + o.railClass);
 
-            getBarHeight();
+                    getBarHeight();
 
-            // check if we should scroll existing instance
-            if ($.isPlainObject(options))
-            {
-              // Pass height: auto to an existing slimscroll object to force a resize after contents have changed
-              if ( 'height' in options && options.height == 'auto' ) {
-                me.parent().css('height', 'auto');
-                me.css('height', 'auto');
-                var height = me.parent().parent().height();
-                me.parent().css('height', height);
-                me.css('height', height);
-              } else if ('height' in options) {
-                var h = options.height;
-                me.parent().css('height', h);
-                me.css('height', h);
-              }
+                    // check if we should scroll existing instance
+                    if ($.isPlainObject(options)) {
+                        // Pass height: auto to an existing slimscroll object to force a resize after contents have changed
+                        if ('height' in options && options.height == 'auto') {
+                            me.parent().css('height', 'auto');
+                            me.css('height', 'auto');
+                            var height = me.parent().parent().height();
+                            me.parent().css('height', height);
+                            me.css('height', height);
+                        } else if ('height' in options) {
+                            var h = options.height;
+                            me.parent().css('height', h);
+                            me.css('height', h);
+                        }
 
-              if ('scrollTo' in options)
-              {
-                // jump to a static point
-                offset = parseInt(o.scrollTo);
-              }
-              else if ('scrollBy' in options)
-              {
-                // jump by value pixels
-                offset += parseInt(o.scrollBy);
-              }
-              else if ('destroy' in options)
-              {
-                // remove slimscroll elements
-                bar.remove();
-                rail.remove();
-                me.unwrap();
-                return;
-              }
+                        if ('scrollTo' in options) {
+                            // jump to a static point
+                            offset = parseInt(o.scrollTo);
+                        } else if ('scrollBy' in options) {
+                            // jump by value pixels
+                            offset += parseInt(o.scrollBy);
+                        } else if ('destroy' in options) {
+                            // remove slimscroll elements
+                            bar.remove();
+                            rail.remove();
+                            me.unwrap();
+                            return;
+                        }
 
-              // scroll content by the given offset
-              scrollContent(offset, false, true);
-            }
+                        // scroll content by the given offset
+                        scrollContent(offset, false, true);
+                    }
 
-            return;
-        }
-        else if ($.isPlainObject(options))
-        {
-            if ('destroy' in options)
-            {
-            	return;
-            }
-        }
+                    return;
+                } else if ($.isPlainObject(options)) {
+                    if ('destroy' in options) {
+                        return;
+                    }
+                }
 
-        // optionally set height to the parent's height
-        o.height = (o.height == 'auto') ? me.parent().height() : o.height;
+                // optionally set height to the parent's height
+                o.height = (o.height == 'auto') ? me.parent().height() : o.height;
 
-        // wrap content
-        var wrapper = $(divS)
-          .addClass(o.wrapperClass)
-          .css({
-            position: 'relative',
-            overflow: 'hidden',
-            width: o.width,
-            height: o.height
-          });
+                // wrap content
+                var wrapper = $(divS)
+                    .addClass(o.wrapperClass)
+                    .css({
+                        position: 'relative',
+                        overflow: 'hidden',
+                        width: o.width,
+                        height: o.height
+                    });
 
-        // update style for the div
-        me.css({
-          overflow: 'hidden',
-          width: o.width,
-          height: o.height
-        });
+                // update style for the div
+                me.css({
+                    overflow: 'hidden',
+                    width: o.width,
+                    height: o.height
+                });
 
-        // create scrollbar rail
-        var rail = $(divS)
-          .addClass(o.railClass)
-          .css({
-            width: o.size,
-            height: '100%',
-            position: 'absolute',
-            top: 0,
-            display: (o.alwaysVisible && o.railVisible) ? 'block' : 'none',
-            'border-radius': o.railBorderRadius,
-            background: o.railColor,
-            opacity: o.railOpacity,
-            zIndex: 90
-          });
+                // create scrollbar rail
+                var rail = $(divS)
+                    .addClass(o.railClass)
+                    .css({
+                        width: o.size,
+                        height: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        display: (o.alwaysVisible && o.railVisible) ? 'block' : 'none',
+                        'border-radius': o.railBorderRadius,
+                        background: o.railColor,
+                        opacity: o.railOpacity,
+                        zIndex: 90
+                    });
 
-        // create scrollbar
-        var bar = $(divS)
-          .addClass(o.barClass)
-          .css({
-            background: o.color,
-            width: o.size,
-            position: 'absolute',
-            top: 0,
-            opacity: o.opacity,
-            display: o.alwaysVisible ? 'block' : 'none',
-            'border-radius' : o.borderRadius,
-            BorderRadius: o.borderRadius,
-            MozBorderRadius: o.borderRadius,
-            WebkitBorderRadius: o.borderRadius,
-            zIndex: 99
-          });
+                // create scrollbar
+                var bar = $(divS)
+                    .addClass(o.barClass)
+                    .css({
+                        background: o.color,
+                        width: o.size,
+                        position: 'absolute',
+                        top: 0,
+                        opacity: o.opacity,
+                        display: o.alwaysVisible ? 'block' : 'none',
+                        'border-radius': o.borderRadius,
+                        BorderRadius: o.borderRadius,
+                        MozBorderRadius: o.borderRadius,
+                        WebkitBorderRadius: o.borderRadius,
+                        zIndex: 99
+                    });
 
-        // set position
-        var posCss = (o.position == 'right') ? { right: o.distance } : { left: o.distance };
-        rail.css(posCss);
-        bar.css(posCss);
+                // set position
+                var posCss = (o.position == 'right') ? { right: o.distance } : { left: o.distance };
+                rail.css(posCss);
+                bar.css(posCss);
 
-        // wrap it
-        me.wrap(wrapper);
+                // wrap it
+                me.wrap(wrapper);
 
-        // append to parent div
-        me.parent().append(bar);
-        me.parent().append(rail);
+                // append to parent div
+                me.parent().append(bar);
+                me.parent().append(rail);
 
-        // make it draggable and no longer dependent on the jqueryUI
-        if (o.railDraggable){
-          bar.bind("mousedown", function(e) {
-            var $doc = $(document);
-            isDragg = true;
-            t = parseFloat(bar.css('top'));
-            pageY = e.pageY;
+                // make it draggable and no longer dependent on the jqueryUI
+                if (o.railDraggable) {
+                    bar.bind("mousedown", function(e) {
+                        var $doc = $(document);
+                        isDragg = true;
+                        t = parseFloat(bar.css('top'));
+                        pageY = e.pageY;
 
-            $doc.bind("mousemove.slimscroll", function(e){
-              currTop = t + e.pageY - pageY;
-              bar.css('top', currTop);
-              scrollContent(0, bar.position().top, false);// scroll content
+                        $doc.bind("mousemove.slimscroll", function(e) {
+                            currTop = t + e.pageY - pageY;
+                            bar.css('top', currTop);
+                            scrollContent(0, bar.position().top, false); // scroll content
+                        });
+
+                        $doc.bind("mouseup.slimscroll", function(e) {
+                            isDragg = false;
+                            hideBar();
+                            $doc.unbind('.slimscroll');
+                        });
+                        return false;
+                    }).bind("selectstart.slimscroll", function(e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        return false;
+                    });
+                }
+
+                // on rail over
+                rail.hover(function() {
+                    showBar();
+                }, function() {
+                    hideBar();
+                });
+
+                // on bar over
+                bar.hover(function() {
+                    isOverBar = true;
+                }, function() {
+                    isOverBar = false;
+                });
+
+                // show on parent mouseover
+                me.hover(function() {
+                    isOverPanel = true;
+                    showBar();
+                    hideBar();
+                }, function() {
+                    isOverPanel = false;
+                    hideBar();
+                });
+
+                // support for mobile
+                me.bind('touchstart', function(e, b) {
+                    if (e.originalEvent.touches.length) {
+                        // record where touch started
+                        touchDif = e.originalEvent.touches[0].pageY;
+                    }
+                });
+
+                me.bind('touchmove', function(e) {
+                    // prevent scrolling the page if necessary
+                    if (!releaseScroll) {
+                        e.originalEvent.preventDefault();
+                    }
+                    if (e.originalEvent.touches.length) {
+                        // see how far user swiped
+                        var diff = (touchDif - e.originalEvent.touches[0].pageY) / o.touchScrollStep;
+                        // scroll content
+                        scrollContent(diff, true);
+                        touchDif = e.originalEvent.touches[0].pageY;
+                    }
+                });
+
+                // set up initial height
+                getBarHeight();
+
+                // check start position
+                if (o.start === 'bottom') {
+                    // scroll content to bottom
+                    bar.css({ top: me.outerHeight() - bar.outerHeight() });
+                    scrollContent(0, true);
+                } else if (o.start !== 'top') {
+                    // assume jQuery selector
+                    scrollContent($(o.start).position().top, null, true);
+
+                    // make sure bar stays hidden
+                    if (!o.alwaysVisible) { bar.hide(); }
+                }
+
+                // attach scroll events
+                attachWheel(this);
+
+                function _onWheel(e) {
+                    // use mouse wheel only when mouse is over
+                    if (!isOverPanel) { return; }
+
+                    var e = e || window.event;
+
+                    var delta = 0;
+                    if (e.wheelDelta) { delta = -e.wheelDelta / 120; }
+                    if (e.detail) { delta = e.detail / 3; }
+
+                    var target = e.target || e.srcTarget || e.srcElement;
+                    if ($(target).closest('.' + o.wrapperClass).is(me.parent())) {
+                        // scroll content
+                        scrollContent(delta, true);
+                    }
+
+                    // stop window scroll
+                    if (e.preventDefault && !releaseScroll) { e.preventDefault(); }
+                    if (!releaseScroll) { e.returnValue = false; }
+                }
+
+                function scrollContent(y, isWheel, isJump) {
+                    releaseScroll = false;
+                    var delta = y;
+                    var maxTop = me.outerHeight() - bar.outerHeight();
+
+                    if (isWheel) {
+                        // move bar with mouse wheel
+                        delta = parseInt(bar.css('top')) + y * parseInt(o.wheelStep) / 100 * bar.outerHeight();
+
+                        // move bar, make sure it doesn't go out
+                        delta = Math.min(Math.max(delta, 0), maxTop);
+
+                        // if scrolling down, make sure a fractional change to the
+                        // scroll position isn't rounded away when the scrollbar's CSS is set
+                        // this flooring of delta would happened automatically when
+                        // bar.css is set below, but we floor here for clarity
+                        delta = (y > 0) ? Math.ceil(delta) : Math.floor(delta);
+
+                        // scroll the scrollbar
+                        bar.css({ top: delta + 'px' });
+                    }
+
+                    // calculate actual scroll amount
+                    percentScroll = parseInt(bar.css('top')) / (me.outerHeight() - bar.outerHeight());
+                    delta = percentScroll * (me[0].scrollHeight - me.outerHeight());
+
+                    if (isJump) {
+                        delta = y;
+                        var offsetTop = delta / me[0].scrollHeight * me.outerHeight();
+                        offsetTop = Math.min(Math.max(offsetTop, 0), maxTop);
+                        bar.css({ top: offsetTop + 'px' });
+                    }
+
+                    // scroll content
+                    me.scrollTop(delta);
+
+                    // fire scrolling event
+                    me.trigger('slimscrolling', ~~delta);
+
+                    // ensure bar is visible
+                    showBar();
+
+                    // trigger hide when scroll is stopped
+                    hideBar();
+                }
+
+                function attachWheel(target) {
+                    if (window.addEventListener) {
+                        target.addEventListener('DOMMouseScroll', _onWheel, false);
+                        target.addEventListener('mousewheel', _onWheel, false);
+                    } else {
+                        document.attachEvent("onmousewheel", _onWheel)
+                    }
+                }
+
+                function getBarHeight() {
+                    // calculate scrollbar height and make sure it is not too small
+                    barHeight = Math.max((me.outerHeight() / me[0].scrollHeight) * me.outerHeight(), minBarHeight);
+                    bar.css({ height: barHeight + 'px' });
+
+                    // hide scrollbar if content is not long enough
+                    var display = barHeight == me.outerHeight() ? 'none' : 'block';
+                    bar.css({ display: display });
+                }
+
+                function showBar() {
+                    // recalculate bar height
+                    getBarHeight();
+                    clearTimeout(queueHide);
+
+                    // when bar reached top or bottom
+                    if (percentScroll == ~~percentScroll) {
+                        //release wheel
+                        releaseScroll = o.allowPageScroll;
+
+                        // publish approporiate event
+                        if (lastScroll != percentScroll) {
+                            var msg = (~~percentScroll == 0) ? 'top' : 'bottom';
+                            me.trigger('slimscroll', msg);
+                        }
+                    } else {
+                        releaseScroll = false;
+                    }
+                    lastScroll = percentScroll;
+
+                    // show only when required
+                    if (barHeight >= me.outerHeight()) {
+                        //allow window scroll
+                        releaseScroll = true;
+                        return;
+                    }
+                    bar.stop(true, true).fadeIn('fast');
+                    if (o.railVisible) { rail.stop(true, true).fadeIn('fast'); }
+                }
+
+                function hideBar() {
+                    // only hide when options allow it
+                    if (!o.alwaysVisible) {
+                        queueHide = setTimeout(function() {
+                            if (!(o.disableFadeOut && isOverPanel) && !isOverBar && !isDragg) {
+                                bar.fadeOut('slow');
+                                rail.fadeOut('slow');
+                            }
+                        }, 1000);
+                    }
+                }
+
             });
 
-            $doc.bind("mouseup.slimscroll", function(e) {
-              isDragg = false;hideBar();
-              $doc.unbind('.slimscroll');
-            });
-            return false;
-          }).bind("selectstart.slimscroll", function(e){
-            e.stopPropagation();
-            e.preventDefault();
-            return false;
-          });
+            // maintain chainability
+            return this;
         }
+    });
 
-        // on rail over
-        rail.hover(function(){
-          showBar();
-        }, function(){
-          hideBar();
-        });
-
-        // on bar over
-        bar.hover(function(){
-          isOverBar = true;
-        }, function(){
-          isOverBar = false;
-        });
-
-        // show on parent mouseover
-        me.hover(function(){
-          isOverPanel = true;
-          showBar();
-          hideBar();
-        }, function(){
-          isOverPanel = false;
-          hideBar();
-        });
-
-        // support for mobile
-        me.bind('touchstart', function(e,b){
-          if (e.originalEvent.touches.length)
-          {
-            // record where touch started
-            touchDif = e.originalEvent.touches[0].pageY;
-          }
-        });
-
-        me.bind('touchmove', function(e){
-          // prevent scrolling the page if necessary
-          if(!releaseScroll)
-          {
-  		      e.originalEvent.preventDefault();
-		      }
-          if (e.originalEvent.touches.length)
-          {
-            // see how far user swiped
-            var diff = (touchDif - e.originalEvent.touches[0].pageY) / o.touchScrollStep;
-            // scroll content
-            scrollContent(diff, true);
-            touchDif = e.originalEvent.touches[0].pageY;
-          }
-        });
-
-        // set up initial height
-        getBarHeight();
-
-        // check start position
-        if (o.start === 'bottom')
-        {
-          // scroll content to bottom
-          bar.css({ top: me.outerHeight() - bar.outerHeight() });
-          scrollContent(0, true);
-        }
-        else if (o.start !== 'top')
-        {
-          // assume jQuery selector
-          scrollContent($(o.start).position().top, null, true);
-
-          // make sure bar stays hidden
-          if (!o.alwaysVisible) { bar.hide(); }
-        }
-
-        // attach scroll events
-        attachWheel(this);
-
-        function _onWheel(e)
-        {
-          // use mouse wheel only when mouse is over
-          if (!isOverPanel) { return; }
-
-          var e = e || window.event;
-
-          var delta = 0;
-          if (e.wheelDelta) { delta = -e.wheelDelta/120; }
-          if (e.detail) { delta = e.detail / 3; }
-
-          var target = e.target || e.srcTarget || e.srcElement;
-          if ($(target).closest('.' + o.wrapperClass).is(me.parent())) {
-            // scroll content
-            scrollContent(delta, true);
-          }
-
-          // stop window scroll
-          if (e.preventDefault && !releaseScroll) { e.preventDefault(); }
-          if (!releaseScroll) { e.returnValue = false; }
-        }
-
-        function scrollContent(y, isWheel, isJump)
-        {
-          releaseScroll = false;
-          var delta = y;
-          var maxTop = me.outerHeight() - bar.outerHeight();
-
-          if (isWheel)
-          {
-            // move bar with mouse wheel
-            delta = parseInt(bar.css('top')) + y * parseInt(o.wheelStep) / 100 * bar.outerHeight();
-
-            // move bar, make sure it doesn't go out
-            delta = Math.min(Math.max(delta, 0), maxTop);
-
-            // if scrolling down, make sure a fractional change to the
-            // scroll position isn't rounded away when the scrollbar's CSS is set
-            // this flooring of delta would happened automatically when
-            // bar.css is set below, but we floor here for clarity
-            delta = (y > 0) ? Math.ceil(delta) : Math.floor(delta);
-
-            // scroll the scrollbar
-            bar.css({ top: delta + 'px' });
-          }
-
-          // calculate actual scroll amount
-          percentScroll = parseInt(bar.css('top')) / (me.outerHeight() - bar.outerHeight());
-          delta = percentScroll * (me[0].scrollHeight - me.outerHeight());
-
-          if (isJump)
-          {
-            delta = y;
-            var offsetTop = delta / me[0].scrollHeight * me.outerHeight();
-            offsetTop = Math.min(Math.max(offsetTop, 0), maxTop);
-            bar.css({ top: offsetTop + 'px' });
-          }
-
-          // scroll content
-          me.scrollTop(delta);
-
-          // fire scrolling event
-          me.trigger('slimscrolling', ~~delta);
-
-          // ensure bar is visible
-          showBar();
-
-          // trigger hide when scroll is stopped
-          hideBar();
-        }
-
-        function attachWheel(target)
-        {
-          if (window.addEventListener)
-          {
-            target.addEventListener('DOMMouseScroll', _onWheel, false );
-            target.addEventListener('mousewheel', _onWheel, false );
-          }
-          else
-          {
-            document.attachEvent("onmousewheel", _onWheel)
-          }
-        }
-
-        function getBarHeight()
-        {
-          // calculate scrollbar height and make sure it is not too small
-          barHeight = Math.max((me.outerHeight() / me[0].scrollHeight) * me.outerHeight(), minBarHeight);
-          bar.css({ height: barHeight + 'px' });
-
-          // hide scrollbar if content is not long enough
-          var display = barHeight == me.outerHeight() ? 'none' : 'block';
-          bar.css({ display: display });
-        }
-
-        function showBar()
-        {
-          // recalculate bar height
-          getBarHeight();
-          clearTimeout(queueHide);
-
-          // when bar reached top or bottom
-          if (percentScroll == ~~percentScroll)
-          {
-            //release wheel
-            releaseScroll = o.allowPageScroll;
-
-            // publish approporiate event
-            if (lastScroll != percentScroll)
-            {
-                var msg = (~~percentScroll == 0) ? 'top' : 'bottom';
-                me.trigger('slimscroll', msg);
-            }
-          }
-          else
-          {
-            releaseScroll = false;
-          }
-          lastScroll = percentScroll;
-
-          // show only when required
-          if(barHeight >= me.outerHeight()) {
-            //allow window scroll
-            releaseScroll = true;
-            return;
-          }
-          bar.stop(true,true).fadeIn('fast');
-          if (o.railVisible) { rail.stop(true,true).fadeIn('fast'); }
-        }
-
-        function hideBar()
-        {
-          // only hide when options allow it
-          if (!o.alwaysVisible)
-          {
-            queueHide = setTimeout(function(){
-              if (!(o.disableFadeOut && isOverPanel) && !isOverBar && !isDragg)
-              {
-                bar.fadeOut('slow');
-                rail.fadeOut('slow');
-              }
-            }, 1000);
-          }
-        }
-
-      });
-
-      // maintain chainability
-      return this;
-    }
-  });
-
-  $.fn.extend({
-    slimscroll: $.fn.slimScroll
-  });
+    $.fn.extend({
+        slimscroll: $.fn.slimScroll
+    });
 
 })(jQuery);
 
@@ -1874,11 +1839,11 @@ function getPageId(element) {
 
 function findTabTitle(pageId) {
     var $ele = null;
-    $(".page-tabs-content").find("a.menu_tab").each(function () {
+    $(".page-tabs-content").find("a.menu_tab").each(function() {
         var $a = $(this);
         if ($a.attr(pageIdField) == pageId) {
             $ele = $a;
-            return false;//退出循环
+            return false; //退出循环
         }
     });
     return $ele;
@@ -1886,11 +1851,11 @@ function findTabTitle(pageId) {
 
 function findTabPanel(pageId) {
     var $ele = null;
-    $("#tab-content").find("div.tab-pane").each(function () {
+    $("#tab-content").find("div.tab-pane").each(function() {
         var $div = $(this);
         if ($div.attr(pageIdField) == pageId) {
             $ele = $div;
-            return false;//退出循环
+            return false; //退出循环
         }
     });
     return $ele;
@@ -1910,7 +1875,7 @@ function canRemoveTab(pageId) {
 }
 
 //添加tab
-var addTabs = function (options) {
+var addTabs = function(options) {
     var defaultTabOptions = {
         id: Math.random() * 200,
         urlType: "relative",
@@ -1921,7 +1886,8 @@ var addTabs = function (options) {
 
     if (options.urlType === "relative") {
         // var url = window.location.protocol + '//' + window.location.host + "/";
-        var basePath = window.location.pathname + "/../";
+        // var basePath = window.location.pathname + "/../";
+        var basePath = "/backend/";
         options.url = basePath + options.url;
     }
 
@@ -1959,17 +1925,17 @@ var addTabs = function (options) {
             App.blockUI({
                 target: '#tab-content',
                 boxed: true,
-                message: '加载中......'//,
-                // animate: true
+                message: '加载中......' //,
+                    // animate: true
             });
 
             var $iframe = $("<iframe></iframe>").attr("src", options.url).css("width", "100%").attr("frameborder", "no").attr("id", "iframe_" + pageId).addClass("tab_iframe").attr(pageIdField, pageId);
             //frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes"  allowtransparency="yes"
 
             //iframe 加载完成事件
-            $iframe.load(function () {
-                App.unblockUI('#tab-content');//解锁界面
-                App.fixIframeCotent();//修正高度
+            $iframe.load(function() {
+                App.unblockUI('#tab-content'); //解锁界面
+                App.fixIframeCotent(); //修正高度
             });
 
             $tabPanel.append($iframe);
@@ -1990,7 +1956,7 @@ var addTabs = function (options) {
 };
 
 //关闭tab
-var closeTab = function (item) {
+var closeTab = function(item) {
     //item可以是a标签,也可以是i标签
     //它们都有data-id属性,获取完成之后就没事了
     var pageId = getPageId(item);
@@ -1998,8 +1964,8 @@ var closeTab = function (item) {
 };
 
 function closeTabByPageId(pageId) {
-    var $title = findTabTitle(pageId);//有tab的标题
-    var $tabPanel = findTabPanel(pageId);//装有iframe
+    var $title = findTabTitle(pageId); //有tab的标题
+    var $tabPanel = findTabPanel(pageId); //装有iframe
 
     if ($title.hasClass("active")) {
         //要关闭的tab处于活动状态
@@ -2014,7 +1980,7 @@ function closeTabByPageId(pageId) {
             activePageId = getPageId($title.prev());
         }
 
-        setTimeout(function () {
+        setTimeout(function() {
             //某种bug，需要延迟执行
             activeTabByPageId(activePageId);
         }, 100);
@@ -2032,13 +1998,13 @@ function closeTabByPageId(pageId) {
 }
 
 function closeTabOnly(pageId) {
-    var $title = findTabTitle(pageId);//有tab的标题
-    var $tabPanel = findTabPanel(pageId);//装有iframe
+    var $title = findTabTitle(pageId); //有tab的标题
+    var $tabPanel = findTabPanel(pageId); //装有iframe
     $title.remove();
     $tabPanel.remove();
 }
 
-var closeCurrentTab = function () {
+var closeCurrentTab = function() {
     var pageId = getActivePageId();
     if (canRemoveTab(pageId)) {
         closeTabByPageId(pageId);
@@ -2050,20 +2016,20 @@ function refreshTabById(pageId) {
     var url = $iframe.attr('src');
 
     if (url.indexOf(top.document.domain) < 0) {
-        $iframe.attr("src", url);// 跨域状况下，重新设置url
+        $iframe.attr("src", url); // 跨域状况下，重新设置url
     } else {
-        $iframe[0].contentWindow.location.reload(true);//带参数刷新
+        $iframe[0].contentWindow.location.reload(true); //带参数刷新
     }
 
     App.blockUI({
         target: '#tab-content',
         boxed: true,
-        message: '加载中......'//,
-        // animate: true
+        message: '加载中......' //,
+            // animate: true
     });
 }
 
-var refreshTab = function () {
+var refreshTab = function() {
     //刷新当前tab
     var pageId = getActivePageId();
     refreshTabById(pageId);
@@ -2086,25 +2052,25 @@ function getTabUrl(element) {
  * @param title
  */
 function editTabTitle(pageId, title) {
-    var $title = findTabTitle(pageId);//有tab的标题
+    var $title = findTabTitle(pageId); //有tab的标题
     var $span = $title.children("span.page_tab_title");
     $span.text(title);
 }
 
 //计算多个jq对象的宽度和
-var calSumWidth = function (element) {
+var calSumWidth = function(element) {
     var width = 0;
-    $(element).each(function () {
+    $(element).each(function() {
         width += $(this).outerWidth(true);
     });
     return width;
 };
 //滚动到指定选项卡
-var scrollToTab = function (element) {
+var scrollToTab = function(element) {
     //element是tab(a标签),装有标题那个
     //div.content-tabs > div.page-tabs-content
-    var marginLeftVal = calSumWidth($(element).prevAll()),//前面所有tab的总宽度
-        marginRightVal = calSumWidth($(element).nextAll());//后面所有tab的总宽度
+    var marginLeftVal = calSumWidth($(element).prevAll()), //前面所有tab的总宽度
+        marginRightVal = calSumWidth($(element).nextAll()); //后面所有tab的总宽度
     //一些按钮(向左,向右滑动)的总宽度
     var tabOuterWidth = calSumWidth($(".content-tabs").children().not(".menuTabs"));
     // tab(a标签)显示区域的总宽度
@@ -2135,7 +2101,7 @@ var scrollToTab = function (element) {
     }, "fast");
 };
 //滚动条滚动到左边
-var scrollTabLeft = function () {
+var scrollTabLeft = function() {
     var marginLeftVal = Math.abs(parseInt($('.page-tabs-content').css('margin-left')));
     var tabOuterWidth = calSumWidth($(".content-tabs").children().not(".menuTabs"));
     var visibleWidth = $(".content-tabs").outerWidth(true) - tabOuterWidth;
@@ -2163,7 +2129,7 @@ var scrollTabLeft = function () {
     }, "fast");
 };
 //滚动条滚动到右边
-var scrollTabRight = function () {
+var scrollTabRight = function() {
     var marginLeftVal = Math.abs(parseInt($('.page-tabs-content').css('margin-left')));
     var tabOuterWidth = calSumWidth($(".content-tabs").children().not(".menuTabs"));
     var visibleWidth = $(".content-tabs").outerWidth(true) - tabOuterWidth;
@@ -2192,10 +2158,10 @@ var scrollTabRight = function () {
 };
 
 //关闭其他选项卡
-var closeOtherTabs = function (isAll) {
+var closeOtherTabs = function(isAll) {
     if (isAll) {
         //关闭全部
-        $('.page-tabs-content').children("[" + pageIdField + "]").find('.fa-remove').parents('a').each(function () {
+        $('.page-tabs-content').children("[" + pageIdField + "]").find('.fa-remove').parents('a').each(function() {
             var $a = $(this);
             var pageId = getPageId($a);
             closeTabOnly(pageId);
@@ -2214,7 +2180,7 @@ var closeOtherTabs = function (isAll) {
         }
     } else {
         //除此之外全部删除
-        $('.page-tabs-content').children("[" + pageIdField + "]").find('.fa-remove').parents('a').not(".active").each(function () {
+        $('.page-tabs-content').children("[" + pageIdField + "]").find('.fa-remove').parents('a').not(".active").each(function() {
             var $a = $(this);
             var pageId = getPageId($a);
             closeTabOnly(pageId);
@@ -2238,16 +2204,16 @@ function activeTabByPageId(pageId) {
     scrollToTab($title[0]);
 }
 
-$(function () {
+$(function() {
     var $tabs = $(".menuTabs");
     //点击选项卡的时候就激活tab
-    $tabs.on("click", ".menu_tab", function () {
+    $tabs.on("click", ".menu_tab", function() {
         var pageId = getPageId(this);
         activeTabByPageId(pageId);
     });
 
     //双击选项卡刷新页面
-    $tabs.on("dblclick", ".menu_tab", function () {
+    $tabs.on("dblclick", ".menu_tab", function() {
         // console.log("dbclick");
         var pageId = getPageId(this);
         refreshTabById(pageId);
@@ -2263,14 +2229,14 @@ $(function () {
     }
 
     context.init({
-        preventDoubleContext: false,//不禁用原始右键菜单
-        compress: true//元素更少的padding
+        preventDoubleContext: false, //不禁用原始右键菜单
+        compress: true //元素更少的padding
     });
     context.attach('.page-tabs-content', [
-//            {header: 'Options'},
+        //            {header: 'Options'},
         {
             text: '刷新',
-            action: function (e, $selector, rightClickEvent) {
+            action: function(e, $selector, rightClickEvent) {
                 //e是点击菜单的事件
                 //$selector就是＄（".page-tabs-content")
                 //rightClickEvent就是右键打开菜单的事件
@@ -2282,7 +2248,7 @@ $(function () {
         },
         {
             text: "在新窗口打开",
-            action: function (e, $selector, rightClickEvent) {
+            action: function(e, $selector, rightClickEvent) {
 
                 var pageId = getPageId(findTabElement(rightClickEvent.target));
                 var url = getTabUrlById(pageId);
@@ -2290,10 +2256,10 @@ $(function () {
 
             }
         }
-//            {text: 'Open in new Window', href: '#'},
-//            {divider: true},
-//            {text: 'Copy', href: '#'},
-//            {text: 'Dafuq!?', href: '#'}
+        //            {text: 'Open in new Window', href: '#'},
+        //            {divider: true},
+        //            {text: 'Copy', href: '#'},
+        //            {text: 'Dafuq!?', href: '#'}
     ]);
 
 });
@@ -2310,9 +2276,144 @@ $(function () {
  *
  * Thanks to Amir-Hossein Sobhi for some excellent contributions!
  */
- !function(){"use strict";function e(e){function t(t,n){var s,h,k=t==window,y=n&&void 0!==n.message?n.message:void 0;if(n=e.extend({},e.blockUI.defaults,n||{}),!n.ignoreIfBlocked||!e(t).data("blockUI.isBlocked")){if(n.overlayCSS=e.extend({},e.blockUI.defaults.overlayCSS,n.overlayCSS||{}),s=e.extend({},e.blockUI.defaults.css,n.css||{}),n.onOverlayClick&&(n.overlayCSS.cursor="pointer"),h=e.extend({},e.blockUI.defaults.themedCSS,n.themedCSS||{}),y=void 0===y?n.message:y,k&&p&&o(window,{fadeOut:0}),y&&"string"!=typeof y&&(y.parentNode||y.jquery)){var m=y.jquery?y[0]:y,v={};e(t).data("blockUI.history",v),v.el=m,v.parent=m.parentNode,v.display=m.style.display,v.position=m.style.position,v.parent&&v.parent.removeChild(m)}e(t).data("blockUI.onUnblock",n.onUnblock);var g,I,w,U,x=n.baseZ;g=e(r||n.forceIframe?'<iframe class="blockUI" style="z-index:'+x++ +';display:none;border:none;margin:0;padding:0;position:absolute;width:100%;height:100%;top:0;left:0" src="'+n.iframeSrc+'"></iframe>':'<div class="blockUI" style="display:none"></div>'),I=e(n.theme?'<div class="blockUI blockOverlay ui-widget-overlay" style="z-index:'+x++ +';display:none"></div>':'<div class="blockUI blockOverlay" style="z-index:'+x++ +';display:none;border:none;margin:0;padding:0;width:100%;height:100%;top:0;left:0"></div>'),n.theme&&k?(U='<div class="blockUI '+n.blockMsgClass+' blockPage ui-dialog ui-widget ui-corner-all" style="z-index:'+(x+10)+';display:none;position:fixed">',n.title&&(U+='<div class="ui-widget-header ui-dialog-titlebar ui-corner-all blockTitle">'+(n.title||"&nbsp;")+"</div>"),U+='<div class="ui-widget-content ui-dialog-content"></div>',U+="</div>"):n.theme?(U='<div class="blockUI '+n.blockMsgClass+' blockElement ui-dialog ui-widget ui-corner-all" style="z-index:'+(x+10)+';display:none;position:absolute">',n.title&&(U+='<div class="ui-widget-header ui-dialog-titlebar ui-corner-all blockTitle">'+(n.title||"&nbsp;")+"</div>"),U+='<div class="ui-widget-content ui-dialog-content"></div>',U+="</div>"):U=k?'<div class="blockUI '+n.blockMsgClass+' blockPage" style="z-index:'+(x+10)+';display:none;position:fixed"></div>':'<div class="blockUI '+n.blockMsgClass+' blockElement" style="z-index:'+(x+10)+';display:none;position:absolute"></div>',w=e(U),y&&(n.theme?(w.css(h),w.addClass("ui-widget-content")):w.css(s)),n.theme||I.css(n.overlayCSS),I.css("position",k?"fixed":"absolute"),(r||n.forceIframe)&&g.css("opacity",0);var C=[g,I,w],S=e(k?"body":t);e.each(C,function(){this.appendTo(S)}),n.theme&&n.draggable&&e.fn.draggable&&w.draggable({handle:".ui-dialog-titlebar",cancel:"li"});var O=f&&(!e.support.boxModel||e("object,embed",k?null:t).length>0);if(u||O){if(k&&n.allowBodyStretch&&e.support.boxModel&&e("html,body").css("height","100%"),(u||!e.support.boxModel)&&!k)var E=d(t,"borderTopWidth"),T=d(t,"borderLeftWidth"),M=E?"(0 - "+E+")":0,B=T?"(0 - "+T+")":0;e.each(C,function(e,t){var o=t[0].style;if(o.position="absolute",2>e)k?o.setExpression("height","Math.max(document.body.scrollHeight, document.body.offsetHeight) - (jQuery.support.boxModel?0:"+n.quirksmodeOffsetHack+') + "px"'):o.setExpression("height",'this.parentNode.offsetHeight + "px"'),k?o.setExpression("width",'jQuery.support.boxModel && document.documentElement.clientWidth || document.body.clientWidth + "px"'):o.setExpression("width",'this.parentNode.offsetWidth + "px"'),B&&o.setExpression("left",B),M&&o.setExpression("top",M);else if(n.centerY)k&&o.setExpression("top",'(document.documentElement.clientHeight || document.body.clientHeight) / 2 - (this.offsetHeight / 2) + (blah = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop) + "px"'),o.marginTop=0;else if(!n.centerY&&k){var i=n.css&&n.css.top?parseInt(n.css.top,10):0,s="((document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop) + "+i+') + "px"';o.setExpression("top",s)}})}if(y&&(n.theme?w.find(".ui-widget-content").append(y):w.append(y),(y.jquery||y.nodeType)&&e(y).show()),(r||n.forceIframe)&&n.showOverlay&&g.show(),n.fadeIn){var j=n.onBlock?n.onBlock:c,H=n.showOverlay&&!y?j:c,z=y?j:c;n.showOverlay&&I._fadeIn(n.fadeIn,H),y&&w._fadeIn(n.fadeIn,z)}else n.showOverlay&&I.show(),y&&w.show(),n.onBlock&&n.onBlock.bind(w)();if(i(1,t,n),k?(p=w[0],b=e(n.focusableElements,p),n.focusInput&&setTimeout(l,20)):a(w[0],n.centerX,n.centerY),n.timeout){var W=setTimeout(function(){k?e.unblockUI(n):e(t).unblock(n)},n.timeout);e(t).data("blockUI.timeout",W)}}}function o(t,o){var s,l=t==window,a=e(t),d=a.data("blockUI.history"),c=a.data("blockUI.timeout");c&&(clearTimeout(c),a.removeData("blockUI.timeout")),o=e.extend({},e.blockUI.defaults,o||{}),i(0,t,o),null===o.onUnblock&&(o.onUnblock=a.data("blockUI.onUnblock"),a.removeData("blockUI.onUnblock"));var r;r=l?e("body").children().filter(".blockUI").add("body > .blockUI"):a.find(">.blockUI"),o.cursorReset&&(r.length>1&&(r[1].style.cursor=o.cursorReset),r.length>2&&(r[2].style.cursor=o.cursorReset)),l&&(p=b=null),o.fadeOut?(s=r.length,r.stop().fadeOut(o.fadeOut,function(){0===--s&&n(r,d,o,t)})):n(r,d,o,t)}function n(t,o,n,i){var s=e(i);if(!s.data("blockUI.isBlocked")){t.each(function(){this.parentNode&&this.parentNode.removeChild(this)}),o&&o.el&&(o.el.style.display=o.display,o.el.style.position=o.position,o.el.style.cursor="default",o.parent&&o.parent.appendChild(o.el),s.removeData("blockUI.history")),s.data("blockUI.static")&&s.css("position","static"),"function"==typeof n.onUnblock&&n.onUnblock(i,n);var l=e(document.body),a=l.width(),d=l[0].style.width;l.width(a-1).width(a),l[0].style.width=d}}function i(t,o,n){var i=o==window,l=e(o);if((t||(!i||p)&&(i||l.data("blockUI.isBlocked")))&&(l.data("blockUI.isBlocked",t),i&&n.bindEvents&&(!t||n.showOverlay))){var a="mousedown mouseup keydown keypress keyup touchstart touchend touchmove";t?e(document).bind(a,n,s):e(document).unbind(a,s)}}function s(t){if("keydown"===t.type&&t.keyCode&&9==t.keyCode&&p&&t.data.constrainTabKey){var o=b,n=!t.shiftKey&&t.target===o[o.length-1],i=t.shiftKey&&t.target===o[0];if(n||i)return setTimeout(function(){l(i)},10),!1}var s=t.data,a=e(t.target);return a.hasClass("blockOverlay")&&s.onOverlayClick&&s.onOverlayClick(t),a.parents("div."+s.blockMsgClass).length>0?!0:0===a.parents().children().filter("div.blockUI").length}function l(e){if(b){var t=b[e===!0?b.length-1:0];t&&t.focus()}}function a(e,t,o){var n=e.parentNode,i=e.style,s=(n.offsetWidth-e.offsetWidth)/2-d(n,"borderLeftWidth"),l=(n.offsetHeight-e.offsetHeight)/2-d(n,"borderTopWidth");t&&(i.left=s>0?s+"px":"0"),o&&(i.top=l>0?l+"px":"0")}function d(t,o){return parseInt(e.css(t,o),10)||0}e.fn._fadeIn=e.fn.fadeIn;var c=e.noop||function(){},r=/MSIE/.test(navigator.userAgent),u=/MSIE 6.0/.test(navigator.userAgent)&&!/MSIE 8.0/.test(navigator.userAgent),f=(document.documentMode||0,e.isFunction(document.createElement("div").style.setExpression));e.blockUI=function(e){t(window,e)},e.unblockUI=function(e){o(window,e)},e.growlUI=function(t,o,n,i){var s=e('<div class="growlUI"></div>');t&&s.append("<h1>"+t+"</h1>"),o&&s.append("<h2>"+o+"</h2>"),void 0===n&&(n=3e3);var l=function(t){t=t||{},e.blockUI({message:s,fadeIn:"undefined"!=typeof t.fadeIn?t.fadeIn:700,fadeOut:"undefined"!=typeof t.fadeOut?t.fadeOut:1e3,timeout:"undefined"!=typeof t.timeout?t.timeout:n,centerY:!1,showOverlay:!1,onUnblock:i,css:e.blockUI.defaults.growlCSS})};l();s.css("opacity");s.mouseover(function(){l({fadeIn:0,timeout:3e4});var t=e(".blockMsg");t.stop(),t.fadeTo(300,1)}).mouseout(function(){e(".blockMsg").fadeOut(1e3)})},e.fn.block=function(o){if(this[0]===window)return e.blockUI(o),this;var n=e.extend({},e.blockUI.defaults,o||{});return this.each(function(){var t=e(this);n.ignoreIfBlocked&&t.data("blockUI.isBlocked")||t.unblock({fadeOut:0})}),this.each(function(){"static"==e.css(this,"position")&&(this.style.position="relative",e(this).data("blockUI.static",!0)),this.style.zoom=1,t(this,o)})},e.fn.unblock=function(t){return this[0]===window?(e.unblockUI(t),this):this.each(function(){o(this,t)})},e.blockUI.version=2.7,e.blockUI.defaults={message:"<h1>Please wait...</h1>",title:null,draggable:!0,theme:!1,css:{padding:0,margin:0,width:"30%",top:"40%",left:"35%",textAlign:"center",color:"#000",border:"3px solid #aaa",backgroundColor:"#fff",cursor:"wait"},themedCSS:{width:"30%",top:"40%",left:"35%"},overlayCSS:{backgroundColor:"#000",opacity:.6,cursor:"wait"},cursorReset:"default",growlCSS:{width:"350px",top:"10px",left:"",right:"10px",border:"none",padding:"5px",opacity:.6,cursor:"default",color:"#fff",backgroundColor:"#000","-webkit-border-radius":"10px","-moz-border-radius":"10px","border-radius":"10px"},iframeSrc:/^https/i.test(window.location.href||"")?"javascript:false":"about:blank",forceIframe:!1,baseZ:1e3,centerX:!0,centerY:!0,allowBodyStretch:!0,bindEvents:!0,constrainTabKey:!0,fadeIn:200,fadeOut:400,timeout:0,showOverlay:!0,focusInput:!0,focusableElements:":input:enabled:visible",onBlock:null,onUnblock:null,onOverlayClick:null,quirksmodeOffsetHack:4,blockMsgClass:"blockMsg",ignoreIfBlocked:!1};var p=null,b=[]}"function"==typeof define&&define.amd&&define.amd.jQuery?define(["jquery"],e):e(jQuery)}();
-(function ($) {
-    $.fn.sidebarMenu = function (options) {
+! function() {
+    "use strict";
+
+    function e(e) {
+        function t(t, n) {
+            var s, h, k = t == window,
+                y = n && void 0 !== n.message ? n.message : void 0;
+            if (n = e.extend({}, e.blockUI.defaults, n || {}), !n.ignoreIfBlocked || !e(t).data("blockUI.isBlocked")) {
+                if (n.overlayCSS = e.extend({}, e.blockUI.defaults.overlayCSS, n.overlayCSS || {}), s = e.extend({}, e.blockUI.defaults.css, n.css || {}), n.onOverlayClick && (n.overlayCSS.cursor = "pointer"), h = e.extend({}, e.blockUI.defaults.themedCSS, n.themedCSS || {}), y = void 0 === y ? n.message : y, k && p && o(window, { fadeOut: 0 }), y && "string" != typeof y && (y.parentNode || y.jquery)) {
+                    var m = y.jquery ? y[0] : y,
+                        v = {};
+                    e(t).data("blockUI.history", v), v.el = m, v.parent = m.parentNode, v.display = m.style.display, v.position = m.style.position, v.parent && v.parent.removeChild(m)
+                }
+                e(t).data("blockUI.onUnblock", n.onUnblock);
+                var g, I, w, U, x = n.baseZ;
+                g = e(r || n.forceIframe ? '<iframe class="blockUI" style="z-index:' + x++ + ';display:none;border:none;margin:0;padding:0;position:absolute;width:100%;height:100%;top:0;left:0" src="' + n.iframeSrc + '"></iframe>' : '<div class="blockUI" style="display:none"></div>'), I = e(n.theme ? '<div class="blockUI blockOverlay ui-widget-overlay" style="z-index:' + x++ + ';display:none"></div>' : '<div class="blockUI blockOverlay" style="z-index:' + x++ + ';display:none;border:none;margin:0;padding:0;width:100%;height:100%;top:0;left:0"></div>'), n.theme && k ? (U = '<div class="blockUI ' + n.blockMsgClass + ' blockPage ui-dialog ui-widget ui-corner-all" style="z-index:' + (x + 10) + ';display:none;position:fixed">', n.title && (U += '<div class="ui-widget-header ui-dialog-titlebar ui-corner-all blockTitle">' + (n.title || "&nbsp;") + "</div>"), U += '<div class="ui-widget-content ui-dialog-content"></div>', U += "</div>") : n.theme ? (U = '<div class="blockUI ' + n.blockMsgClass + ' blockElement ui-dialog ui-widget ui-corner-all" style="z-index:' + (x + 10) + ';display:none;position:absolute">', n.title && (U += '<div class="ui-widget-header ui-dialog-titlebar ui-corner-all blockTitle">' + (n.title || "&nbsp;") + "</div>"), U += '<div class="ui-widget-content ui-dialog-content"></div>', U += "</div>") : U = k ? '<div class="blockUI ' + n.blockMsgClass + ' blockPage" style="z-index:' + (x + 10) + ';display:none;position:fixed"></div>' : '<div class="blockUI ' + n.blockMsgClass + ' blockElement" style="z-index:' + (x + 10) + ';display:none;position:absolute"></div>', w = e(U), y && (n.theme ? (w.css(h), w.addClass("ui-widget-content")) : w.css(s)), n.theme || I.css(n.overlayCSS), I.css("position", k ? "fixed" : "absolute"), (r || n.forceIframe) && g.css("opacity", 0);
+                var C = [g, I, w],
+                    S = e(k ? "body" : t);
+                e.each(C, function() { this.appendTo(S) }), n.theme && n.draggable && e.fn.draggable && w.draggable({ handle: ".ui-dialog-titlebar", cancel: "li" });
+                var O = f && (!e.support.boxModel || e("object,embed", k ? null : t).length > 0);
+                if (u || O) {
+                    if (k && n.allowBodyStretch && e.support.boxModel && e("html,body").css("height", "100%"), (u || !e.support.boxModel) && !k) var E = d(t, "borderTopWidth"),
+                        T = d(t, "borderLeftWidth"),
+                        M = E ? "(0 - " + E + ")" : 0,
+                        B = T ? "(0 - " + T + ")" : 0;
+                    e.each(C, function(e, t) {
+                        var o = t[0].style;
+                        if (o.position = "absolute", 2 > e) k ? o.setExpression("height", "Math.max(document.body.scrollHeight, document.body.offsetHeight) - (jQuery.support.boxModel?0:" + n.quirksmodeOffsetHack + ') + "px"') : o.setExpression("height", 'this.parentNode.offsetHeight + "px"'), k ? o.setExpression("width", 'jQuery.support.boxModel && document.documentElement.clientWidth || document.body.clientWidth + "px"') : o.setExpression("width", 'this.parentNode.offsetWidth + "px"'), B && o.setExpression("left", B), M && o.setExpression("top", M);
+                        else if (n.centerY) k && o.setExpression("top", '(document.documentElement.clientHeight || document.body.clientHeight) / 2 - (this.offsetHeight / 2) + (blah = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop) + "px"'), o.marginTop = 0;
+                        else if (!n.centerY && k) {
+                            var i = n.css && n.css.top ? parseInt(n.css.top, 10) : 0,
+                                s = "((document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop) + " + i + ') + "px"';
+                            o.setExpression("top", s)
+                        }
+                    })
+                }
+                if (y && (n.theme ? w.find(".ui-widget-content").append(y) : w.append(y), (y.jquery || y.nodeType) && e(y).show()), (r || n.forceIframe) && n.showOverlay && g.show(), n.fadeIn) {
+                    var j = n.onBlock ? n.onBlock : c,
+                        H = n.showOverlay && !y ? j : c,
+                        z = y ? j : c;
+                    n.showOverlay && I._fadeIn(n.fadeIn, H), y && w._fadeIn(n.fadeIn, z)
+                } else n.showOverlay && I.show(), y && w.show(), n.onBlock && n.onBlock.bind(w)();
+                if (i(1, t, n), k ? (p = w[0], b = e(n.focusableElements, p), n.focusInput && setTimeout(l, 20)) : a(w[0], n.centerX, n.centerY), n.timeout) {
+                    var W = setTimeout(function() { k ? e.unblockUI(n) : e(t).unblock(n) }, n.timeout);
+                    e(t).data("blockUI.timeout", W)
+                }
+            }
+        }
+
+        function o(t, o) {
+            var s, l = t == window,
+                a = e(t),
+                d = a.data("blockUI.history"),
+                c = a.data("blockUI.timeout");
+            c && (clearTimeout(c), a.removeData("blockUI.timeout")), o = e.extend({}, e.blockUI.defaults, o || {}), i(0, t, o), null === o.onUnblock && (o.onUnblock = a.data("blockUI.onUnblock"), a.removeData("blockUI.onUnblock"));
+            var r;
+            r = l ? e("body").children().filter(".blockUI").add("body > .blockUI") : a.find(">.blockUI"), o.cursorReset && (r.length > 1 && (r[1].style.cursor = o.cursorReset), r.length > 2 && (r[2].style.cursor = o.cursorReset)), l && (p = b = null), o.fadeOut ? (s = r.length, r.stop().fadeOut(o.fadeOut, function() { 0 === --s && n(r, d, o, t) })) : n(r, d, o, t)
+        }
+
+        function n(t, o, n, i) {
+            var s = e(i);
+            if (!s.data("blockUI.isBlocked")) {
+                t.each(function() { this.parentNode && this.parentNode.removeChild(this) }), o && o.el && (o.el.style.display = o.display, o.el.style.position = o.position, o.el.style.cursor = "default", o.parent && o.parent.appendChild(o.el), s.removeData("blockUI.history")), s.data("blockUI.static") && s.css("position", "static"), "function" == typeof n.onUnblock && n.onUnblock(i, n);
+                var l = e(document.body),
+                    a = l.width(),
+                    d = l[0].style.width;
+                l.width(a - 1).width(a), l[0].style.width = d
+            }
+        }
+
+        function i(t, o, n) {
+            var i = o == window,
+                l = e(o);
+            if ((t || (!i || p) && (i || l.data("blockUI.isBlocked"))) && (l.data("blockUI.isBlocked", t), i && n.bindEvents && (!t || n.showOverlay))) {
+                var a = "mousedown mouseup keydown keypress keyup touchstart touchend touchmove";
+                t ? e(document).bind(a, n, s) : e(document).unbind(a, s)
+            }
+        }
+
+        function s(t) {
+            if ("keydown" === t.type && t.keyCode && 9 == t.keyCode && p && t.data.constrainTabKey) {
+                var o = b,
+                    n = !t.shiftKey && t.target === o[o.length - 1],
+                    i = t.shiftKey && t.target === o[0];
+                if (n || i) return setTimeout(function() { l(i) }, 10), !1
+            }
+            var s = t.data,
+                a = e(t.target);
+            return a.hasClass("blockOverlay") && s.onOverlayClick && s.onOverlayClick(t), a.parents("div." + s.blockMsgClass).length > 0 ? !0 : 0 === a.parents().children().filter("div.blockUI").length
+        }
+
+        function l(e) {
+            if (b) {
+                var t = b[e === !0 ? b.length - 1 : 0];
+                t && t.focus()
+            }
+        }
+
+        function a(e, t, o) {
+            var n = e.parentNode,
+                i = e.style,
+                s = (n.offsetWidth - e.offsetWidth) / 2 - d(n, "borderLeftWidth"),
+                l = (n.offsetHeight - e.offsetHeight) / 2 - d(n, "borderTopWidth");
+            t && (i.left = s > 0 ? s + "px" : "0"), o && (i.top = l > 0 ? l + "px" : "0")
+        }
+
+        function d(t, o) { return parseInt(e.css(t, o), 10) || 0 }
+        e.fn._fadeIn = e.fn.fadeIn;
+        var c = e.noop || function() {},
+            r = /MSIE/.test(navigator.userAgent),
+            u = /MSIE 6.0/.test(navigator.userAgent) && !/MSIE 8.0/.test(navigator.userAgent),
+            f = (document.documentMode || 0, e.isFunction(document.createElement("div").style.setExpression));
+        e.blockUI = function(e) { t(window, e) }, e.unblockUI = function(e) { o(window, e) }, e.growlUI = function(t, o, n, i) {
+            var s = e('<div class="growlUI"></div>');
+            t && s.append("<h1>" + t + "</h1>"), o && s.append("<h2>" + o + "</h2>"), void 0 === n && (n = 3e3);
+            var l = function(t) { t = t || {}, e.blockUI({ message: s, fadeIn: "undefined" != typeof t.fadeIn ? t.fadeIn : 700, fadeOut: "undefined" != typeof t.fadeOut ? t.fadeOut : 1e3, timeout: "undefined" != typeof t.timeout ? t.timeout : n, centerY: !1, showOverlay: !1, onUnblock: i, css: e.blockUI.defaults.growlCSS }) };
+            l();
+            s.css("opacity");
+            s.mouseover(function() {
+                l({ fadeIn: 0, timeout: 3e4 });
+                var t = e(".blockMsg");
+                t.stop(), t.fadeTo(300, 1)
+            }).mouseout(function() { e(".blockMsg").fadeOut(1e3) })
+        }, e.fn.block = function(o) {
+            if (this[0] === window) return e.blockUI(o), this;
+            var n = e.extend({}, e.blockUI.defaults, o || {});
+            return this.each(function() {
+                var t = e(this);
+                n.ignoreIfBlocked && t.data("blockUI.isBlocked") || t.unblock({ fadeOut: 0 })
+            }), this.each(function() { "static" == e.css(this, "position") && (this.style.position = "relative", e(this).data("blockUI.static", !0)), this.style.zoom = 1, t(this, o) })
+        }, e.fn.unblock = function(t) { return this[0] === window ? (e.unblockUI(t), this) : this.each(function() { o(this, t) }) }, e.blockUI.version = 2.7, e.blockUI.defaults = { message: "<h1>Please wait...</h1>", title: null, draggable: !0, theme: !1, css: { padding: 0, margin: 0, width: "30%", top: "40%", left: "35%", textAlign: "center", color: "#000", border: "3px solid #aaa", backgroundColor: "#fff", cursor: "wait" }, themedCSS: { width: "30%", top: "40%", left: "35%" }, overlayCSS: { backgroundColor: "#000", opacity: .6, cursor: "wait" }, cursorReset: "default", growlCSS: { width: "350px", top: "10px", left: "", right: "10px", border: "none", padding: "5px", opacity: .6, cursor: "default", color: "#fff", backgroundColor: "#000", "-webkit-border-radius": "10px", "-moz-border-radius": "10px", "border-radius": "10px" }, iframeSrc: /^https/i.test(window.location.href || "") ? "javascript:false" : "about:blank", forceIframe: !1, baseZ: 1e3, centerX: !0, centerY: !0, allowBodyStretch: !0, bindEvents: !0, constrainTabKey: !0, fadeIn: 200, fadeOut: 400, timeout: 0, showOverlay: !0, focusInput: !0, focusableElements: ":input:enabled:visible", onBlock: null, onUnblock: null, onOverlayClick: null, quirksmodeOffsetHack: 4, blockMsgClass: "blockMsg", ignoreIfBlocked: !1 };
+        var p = null,
+            b = []
+    }
+    "function" == typeof define && define.amd && define.amd.jQuery ? define(["jquery"], e) : e(jQuery)
+}();
+(function($) {
+    $.fn.sidebarMenu = function(options) {
         options = $.extend({}, $.fn.sidebarMenu.defaults, options || {});
         var $menu_ul = $(this);
         var level = 0;
@@ -2320,17 +2421,16 @@ $(function () {
         // target.addClass('nav-list');
         if (options.data) {
             init($menu_ul, options.data, level);
-        }
-        else {
+        } else {
             if (!options.url) return;
-            $.getJSON(options.url, options.param, function (data) {
+            $.getJSON(options.url, options.param, function(data) {
 
                 init($menu_ul, data, level);
             });
         }
 
         function init($menu_ul, data, level) {
-            $.each(data, function (i, item) {
+            $.each(data, function(i, item) {
                 //如果标签是isHeader
                 var $header = $('<li class="header"></li>');
                 if (item.isHeader !== null && item.isHeader === true) {
@@ -2384,24 +2484,20 @@ $(function () {
                     }
                     init(menus, item.children, level + 1);
                     li.append(menus);
-                }
-                else {
+                } else {
 
                     if (item.targetType != null && item.targetType === "blank") //代表打开新页面
                     {
                         $a.attr("href", item.url);
                         $a.attr("target", "_blank");
-                    }
-                    else if (item.targetType != null && item.targetType === "ajax") { //代表ajax方式打开页面
+                    } else if (item.targetType != null && item.targetType === "ajax") { //代表ajax方式打开页面
                         $a.attr("href", item.url);
                         $a.addClass("ajaxify");
-                    }
-                    else if (item.targetType != null && item.targetType === "iframe-tab") {
+                    } else if (item.targetType != null && item.targetType === "iframe-tab") {
                         item.urlType = item.urlType ? item.urlType : 'relative';
                         var href = 'addTabs({id:\'' + item.id + '\',title: \'' + item.text + '\',close: true,url: \'' + item.url + '\',urlType: \'' + item.urlType + '\'});';
                         $a.attr('onclick', href);
-                    }
-                    else if (item.targetType != null && item.targetType === "iframe") { //代表单iframe页面
+                    } else if (item.targetType != null && item.targetType === "iframe") { //代表单iframe页面
                         $a.attr("href", item.url);
                         $a.addClass("iframeOpen");
                         $("#iframe-main").addClass("tab_iframe");
@@ -2424,11 +2520,11 @@ $(function () {
         }
 
         //另外绑定菜单被点击事件,做其它动作
-        $menu_ul.on("click", "li.treeview a", function () {
+        $menu_ul.on("click", "li.treeview a", function() {
             var $a = $(this);
 
-            if ($a.next().size() == 0) {//如果size>0,就认为它是可以展开的
-                if ($(window).width() < $.AdminLTE.options.screenSizes.sm) {//小屏幕
+            if ($a.next().size() == 0) { //如果size>0,就认为它是可以展开的
+                if ($(window).width() < $.AdminLTE.options.screenSizes.sm) { //小屏幕
                     //触发左边菜单栏按钮点击事件,关闭菜单栏
                     $($.AdminLTE.options.sidebarToggleSelector).click();
                 }
