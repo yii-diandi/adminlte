@@ -23,6 +23,7 @@ class AdminLteAsset extends BaseAdminLteAsset
         "plugins/slimScroll/jquery.slimscroll.min.js",
         "plugins/fastclick/fastclick.js",
         "dist/js/app.js",
+        "dist/js/demo.js",
         "dist/js/app_iframe.js",
     ];
     public $depends = [
