@@ -1880,10 +1880,9 @@ var addLeftTabs = function(options) {
             title: "新页面"
         };
         options = $.extend(true, defaultTabOptions, options);
-        console.log(options)
+
 
         $('.left-treeview').each(function(index, item) {
-            console.log(item, index, $(item).addClass('ninini'))
 
             if ($(item).hasClass('left-' + options.mark)) {
                 $(item).addClass('show').removeClass('hide')
@@ -1910,7 +1909,6 @@ var addTabs = function(options) {
         var basePath = "/backend";
         options.url = basePath + options.url;
     }
-    console.log(options.url, 5869)
 
     var pageId = options.id;
 
@@ -1946,8 +1944,8 @@ var addTabs = function(options) {
             App.blockUI({
                 target: '#tab-content',
                 boxed: true,
-                message: '加载中......' //,
-                    // animate: true
+                message: '加载中......', //,
+                animate: true
             });
 
             var $iframe = $("<iframe></iframe>").attr("src", options.url).css("width", "100%").attr("frameborder", "no").attr("id", "iframe_" + pageId).addClass("tab_iframe").attr(pageIdField, pageId);
@@ -2235,7 +2233,6 @@ $(function() {
 
     //双击选项卡刷新页面
     $tabs.on("dblclick", ".menu_tab", function() {
-        // console.log("dbclick");
         var pageId = getPageId(this);
         refreshTabById(pageId);
     });
