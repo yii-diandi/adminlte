@@ -1,3 +1,9 @@
+/*
+ * @Author: Wang Chunsheng 2192138785@qq.com
+ * @Date:   2020-02-29 20:08:50
+ * @Last Modified by:   Wang Chunsheng 2192138785@qq.com
+ * @Last Modified time: 2020-02-29 22:44:18
+ */
 /**
  Core script to handle the entire theme and core functions
  **/
@@ -1880,15 +1886,15 @@ var addLeftTabs = function(options) {
             title: "新页面"
         };
         options = $.extend(true, defaultTabOptions, options);
-
+        $('.top-treeview').removeClass('active')
 
         $('.left-treeview').each(function(index, item) {
 
             if ($(item).hasClass('left-' + options.mark)) {
+                $('.top-' + options.mark).addClass('active')
                 $(item).addClass('show').removeClass('hide')
             } else {
                 $(item).addClass('hide').removeClass('show')
-
             }
         })
 
@@ -2456,10 +2462,14 @@ $(function() {
                     $menu_ul.append($header);
                     return;
                 }
+                let acs = '';
+                if(i==0){
+                    acs = 'active'                    
+                }
 
                 if (item.type == undefined) {
                     //如果不是header
-                    var li = $('<li class="treeview top-treeview  left-' + item.type + '   ' + item.is_show + '" data-level="' + level + '"></li>');
+                    var li = $('<li class="treeview top-treeview '+acs+'  top-' + item.mark + '   ' + item.is_show + '" data-level="' + level + '"></li>');
 
                 } else {
                     //如果不是header
