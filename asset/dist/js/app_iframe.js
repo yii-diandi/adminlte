@@ -2,7 +2,7 @@
  * @Author: Wang Chunsheng 2192138785@qq.com
  * @Date:   2020-02-29 20:08:50
  * @Last Modified by:   Wang Chunsheng 2192138785@qq.com
- * @Last Modified time: 2020-02-29 22:44:18
+ * @Last Modified time: 2020-03-28 23:04:43
  */
 /**
  Core script to handle the entire theme and core functions
@@ -2468,7 +2468,7 @@ $(function() {
                 }
 
                 if (item.type == undefined) {
-                    //如果不是header
+                    //如果是header
                     var li = $('<li class="treeview top-treeview '+acs+'  top-' + item.mark + '   ' + item.is_show + '" data-level="' + level + '"></li>');
 
                 } else {
