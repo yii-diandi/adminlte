@@ -1,6 +1,15 @@
 <?php
 
+/**
+ * @Author: Wang Chunsheng 2192138785@qq.com
+ * @Date:   2020-03-30 17:51:53
+ * @Last Modified by:   Wang Chunsheng 2192138785@qq.com
+ * @Last Modified time: 2020-03-30 19:03:39
+ */
+
+
 use richardfan\widget\JSRegister;
+use yii\bootstrap4\Modal;
 
 ?>
 <!-- demo style -->
@@ -62,6 +71,8 @@ use richardfan\widget\JSRegister;
         }
     }
 </style>
+
+
 
 <body class="hold-transition skin-blue sidebar-mini">
 
@@ -4312,15 +4323,17 @@ use richardfan\widget\JSRegister;
     ]);
     ?>
     <script>
-        var ids = "<?= $ids ?>"
-        var modalClass = "<?= $modalClass ?>";
+        $(function() {
+            var ids = "<?= $ids ?>"
+            var modalClass = "<?= $modalClass ?>";
 
-
-        $('.bs-glyphicons').on('click', 'li', function() {
-            $('.' + ids).val($(this).find('span').attr('class'))
-            $("#" + modalClass).modal('hide');
-
-        });
+            $('.bs-glyphicons').on('click', 'li', function() {
+                console.log(modalClass)
+                $('.' + ids).val($(this).find('span').attr('class'))
+                console.log($("#" + modalClass))
+                $("#" + modalClass).modal('hide')
+            });
+        })
     </script>
 
     <?php JSRegister::end();

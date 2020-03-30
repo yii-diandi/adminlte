@@ -4,7 +4,7 @@
  * @Author: Wang Chunsheng 2192138785@qq.com
  * @Date:   2020-02-29 16:57:33
  * @Last Modified by:   Wang Chunsheng 2192138785@qq.com
- * @Last Modified time: 2020-03-22 15:01:23
+ * @Last Modified time: 2020-03-30 19:20:22
  */
 
 
@@ -29,6 +29,7 @@ class AdminLteAsset extends BaseAdminLteAsset
         'dist/css/skins/all-skins.min.css',
     ];
     public $js = [
+        'plugins/jQuery/jquery-2.2.3.min.js',
         'plugins/slimScroll/jquery.slimscroll.min.js',
         'plugins/fastclick/fastclick.js',
         'dist/js/app.js',
@@ -37,7 +38,7 @@ class AdminLteAsset extends BaseAdminLteAsset
     ];
     public $depends = [
         'rmrevin\yii\fontawesome\AssetBundle',
-        'yii\web\YiiAsset',
+        // 'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
     ];
