@@ -4,7 +4,7 @@
  * @Author: Wang Chunsheng 2192138785@qq.com
  * @Date:   2020-03-30 17:51:53
  * @Last Modified by:   Wang Chunsheng 2192138785@qq.com
- * @Last Modified time: 2020-03-30 19:03:39
+ * @Last Modified time: 2020-03-30 20:25:55
  */
 
 
@@ -4323,17 +4323,18 @@ use yii\bootstrap4\Modal;
     ]);
     ?>
     <script>
-        $(function() {
-            var ids = "<?= $ids ?>"
-            var modalClass = "<?= $modalClass ?>";
+        console.log('er')
+        var ids = "<?= $ids ?>"
+        var modalClass = "<?= $modalClass ?>";
 
-            $('.bs-glyphicons').on('click', 'li', function() {
-                console.log(modalClass)
-                $('.' + ids).val($(this).find('span').attr('class'))
-                console.log($("#" + modalClass))
-                $("#" + modalClass).modal('hide')
-            });
-        })
+        $('.bs-glyphicons').on('click', 'li', function() {
+            console.log(modalClass)
+            $('.' + ids).val($(this).find('span').attr('class'))
+            console.log($("#" + modalClass))
+            $("#" + modalClass).modal({
+                'show': false
+            })
+        });
     </script>
 
     <?php JSRegister::end();

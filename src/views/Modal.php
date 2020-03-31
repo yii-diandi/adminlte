@@ -4,7 +4,7 @@
  * @Author: Wang Chunsheng 2192138785@qq.com
  * @Date:   2020-03-30 18:36:52
  * @Last Modified by:   Wang Chunsheng 2192138785@qq.com
- * @Last Modified time: 2020-03-30 18:46:46
+ * @Last Modified time: 2020-03-30 20:20:57
  */
 
 
@@ -18,6 +18,14 @@ Modal::begin([
     'id' => $modalClass,
     'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>',
 ]);
+
+echo $this->render(
+    '@diandi/adminlte/views/modal/icons.php',
+    [
+        'ids' => $modalClass,
+        'inputClass' => $inputClass
+    ]
+);
 
 Modal::end();
 
@@ -39,14 +47,5 @@ Modal::end();
     'id' => 'icons'
 ]);
 ?>
-<script>
-    var ids = "<?= $modalClass ?>"
-    var inputClass = "<?= $inputClass ?>"
-    var url = '<?= $modalUrl  ?>?inputClass=' + inputClass + '&modalClass=' + ids;
-    $(function() {
-        $("#" + ids)
-            .find(".modal-body")
-            .load(url);
-    })
-</script>
+
 <?= JSRegister::end(); ?>
