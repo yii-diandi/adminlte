@@ -1,3 +1,9 @@
+/*
+ * @Author: Wang Chunsheng 2192138785@qq.com
+ * @Date:   2020-04-12 16:36:35
+ * @Last Modified by:   Wang Chunsheng 2192138785@qq.com
+ * @Last Modified time: 2020-04-12 16:36:35
+ */
 /*! AdminLTE app.js
  * ================
  * Main JS application file for AdminLTE v2. This file
@@ -656,7 +662,7 @@ function _init() {
                 start(box);
 
                 //Perform ajax call
-                box.find(".box-body").load(settings.source, function () {
+                box.find(".box-body").on('load',settings.source, function () {
                     done(box);
                 });
             });

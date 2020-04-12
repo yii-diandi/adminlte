@@ -2,7 +2,7 @@
  * @Author: Wang Chunsheng 2192138785@qq.com
  * @Date:   2020-02-29 20:08:50
  * @Last Modified by:   Wang Chunsheng 2192138785@qq.com
- * @Last Modified time: 2020-03-28 23:04:43
+ * @Last Modified time: 2020-04-12 17:20:50
  */
 /**
  Core script to handle the entire theme and core functions
@@ -73,12 +73,13 @@ var App = function() {
         var $footer = $(".main-footer");
         var $header = $(".main-header");
         var $tabs = $(".content-tabs");
+        
 
-        var height = App.getViewPort().height - $footer.outerHeight() - $header.outerHeight();
+        var height = App.getViewPort().height- $footer.outerHeight() - $header.outerHeight();
         if ($tabs.is(":visible")) {
             height = height - $tabs.outerHeight();
         }
-
+        console.log('初始高度',height,App.getViewPort().height,$footer.outerHeight(),$header.outerHeight(),$tabs.outerHeight())
         $(".tab_iframe").css({
             height: height,
             width: "100%"
@@ -299,9 +300,9 @@ var App = function() {
             return;
         }
         var test = $("input[type=checkbox]:not(.toggle, .md-check, .md-radiobtn, .make-switch, .icheck), input[type=radio]:not(.toggle, .md-check, .md-radiobtn, .star, .make-switch, .icheck)");
-        if (test.size() > 0) {
+        if (test.length > 0) {
             test.each(function() {
-                if ($(this).parents(".checker").size() === 0) {
+                if ($(this).parents(".checker").length === 0) {
                     $(this).show();
                     $(this).uniform();
                 }
@@ -459,9 +460,9 @@ var App = function() {
     var handleModals = function() {
         // fix stackable modal issue: when 2 or more modals opened, closing one of modal will remove .modal-open class. 
         $('body').on('hide.bs.modal', function() {
-            if ($('.modal:visible').size() > 1 && $('html').hasClass('modal-open') === false) {
+            if ($('.modal:visible').length > 1 && $('html').hasClass('modal-open') === false) {
                 $('html').addClass('modal-open');
-            } else if ($('.modal:visible').size() <= 1) {
+            } else if ($('.modal:visible').length <= 1) {
                 $('html').removeClass('modal-open');
             }
         });
@@ -583,7 +584,7 @@ var App = function() {
             return;
         }
 
-        if ($(".fancybox-button").size() > 0) {
+        if ($(".fancybox-button").length > 0) {
             $(".fancybox-button").fancybox({
                 groupAttr: 'data-rel',
                 prevEffect: 'none',
@@ -763,7 +764,7 @@ var App = function() {
         },
         fixIframeCotent: function() {
             setTimeout(function() {
-                //_runResizeHandlers();
+                _runResizeHandlers();
                 handleIframeContent();
             }, 50);
         },
@@ -784,7 +785,7 @@ var App = function() {
 
         // wrApper function to scroll(focus) to an element
         scrollTo: function(el, offeset) {
-            var pos = (el && el.size() > 0) ? el.offset().top : 0;
+            var pos = (el && el.length > 0) ? el.offset().top : 0;
 
             if (el) {
                 if ($('body').hasClass('page-header-fixed')) {
@@ -984,12 +985,12 @@ var App = function() {
             }
 
             if (!options.container) {
-                if ($('.page-fixed-main-content').size() === 1) {
+                if ($('.page-fixed-main-content').length === 1) {
                     $('.page-fixed-main-content').prepend(html);
-                } else if (($('body').hasClass("page-container-bg-solid") || $('body').hasClass("page-content-white")) && $('.page-head').size() === 0) {
+                } else if (($('body').hasClass("page-container-bg-solid") || $('body').hasClass("page-content-white")) && $('.page-head').length === 0) {
                     $('.page-title').after(html);
                 } else {
-                    if ($('.page-bar').size() > 0) {
+                    if ($('.page-bar').length > 0) {
                         $('.page-bar').after(html);
                     } else {
                         $('.page-breadcrumb, .breadcrumbs').after(html);
@@ -1020,7 +1021,7 @@ var App = function() {
         initUniform: function(els) {
             if (els) {
                 $(els).each(function() {
-                    if ($(this).parents(".checker").size() === 0) {
+                    if ($(this).parents(".checker").length === 0) {
                         $(this).show();
                         $(this).uniform();
                     }
@@ -1877,7 +1878,7 @@ function getActivePageId() {
 }
 
 function canRemoveTab(pageId) {
-    return findTabTitle(pageId).find('.fa-remove').size() > 0;
+    return findTabTitle(pageId).find('.fa-remove').length > 0;
 }
 var addLeftTabs = function(options) {
         var defaultTabOptions = {
@@ -1958,7 +1959,7 @@ var addTabs = function(options) {
             //frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes"  allowtransparency="yes"
 
             //iframe 加载完成事件
-            $iframe.load(function() {
+            $iframe.on('load',function() {
                 App.unblockUI('#tab-content'); //解锁界面
                 App.fixIframeCotent(); //修正高度
             });
@@ -1999,7 +2000,7 @@ function closeTabByPageId(pageId) {
         //优先传递给后面的tab,没有的话就传递给前一个
         var $nextTitle = $title.next();
         var activePageId;
-        if ($nextTitle.size() > 0) {
+        if ($nextTitle.length > 0) {
             activePageId = getPageId($nextTitle);
         } else {
             activePageId = getPageId($title.prev());
@@ -2561,7 +2562,7 @@ $(function() {
         $menu_ul.on("click", "li.treeview a", function() {
             var $a = $(this);
 
-            if ($a.next().size() == 0) { //如果size>0,就认为它是可以展开的
+            if ($a.next().length == 0) { //如果size>0,就认为它是可以展开的
                 if ($(window).width() < $.AdminLTE.options.screenSizes.sm) { //小屏幕
                     //触发左边菜单栏按钮点击事件,关闭菜单栏
                     $($.AdminLTE.options.sidebarToggleSelector).click();
