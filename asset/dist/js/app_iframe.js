@@ -2,7 +2,7 @@
  * @Author: Wang Chunsheng 2192138785@qq.com
  * @Date:   2020-02-29 20:08:50
  * @Last Modified by:   Wang Chunsheng 2192138785@qq.com
- * @Last Modified time: 2020-04-12 17:20:50
+ * @Last Modified time: 2020-04-13 09:26:59
  */
 /**
  Core script to handle the entire theme and core functions
@@ -79,7 +79,7 @@ var App = function() {
         if ($tabs.is(":visible")) {
             height = height - $tabs.outerHeight();
         }
-        console.log('初始高度',height,App.getViewPort().height,$footer.outerHeight(),$header.outerHeight(),$tabs.outerHeight())
+        
         $(".tab_iframe").css({
             height: height,
             width: "100%"
@@ -88,6 +88,7 @@ var App = function() {
         //var width = App.getViewPort().width- $(".page-sidebar-menu").width();
         /*$(".tab_iframe").css({
          });*/
+         
     };
     //初始化内容页layout组件高度
     var handleIframeLayoutHeight = function() {
