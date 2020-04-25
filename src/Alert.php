@@ -1,18 +1,19 @@
 <?php
 /**
- * @link http://www.yiiframework.com/
+ * @see http://www.yiiframework.com/
+ *
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
 
 namespace diandi\adminlte;
 
-use yii\bootstrap\Alert as BootstrapAlert;
-use yii\bootstrap\Widget;
+use yii\bootstrap4\Alert as BootstrapAlert;
+use yii\bootstrap4\Widget;
 
 /**
  * Alert widget renders a message from session flash for AdminLTE alerts. All flash messages are displayed
- * in the sequence they were assigned using setFlash. You can set message as following:
+ * in the sequence they were assigned using setFlash. You can set message as following:.
  *
  * ```php
  * \Yii::$app->getSession()->setFlash('error', '<b>Alert!</b> Danger alert preview. This alert is dismissable.');
@@ -30,11 +31,11 @@ class Alert extends Widget
 {
     /**
      * @var array the alert types configuration for the flash messages.
-     * This array is setup as $key => $value, where:
-     * - $key is the name of the session flash variable
-     * - $value is the array:
-     *       - class of alert type (i.e. danger, success, info, warning)
-     *       - icon for alert AdminLTE
+     *            This array is setup as $key => $value, where:
+     *            - $key is the name of the session flash variable
+     *            - $value is the array:
+     *            - class of alert type (i.e. danger, success, info, warning)
+     *            - icon for alert AdminLTE
      */
     public $alertTypes = [
         'error' => [
@@ -60,16 +61,15 @@ class Alert extends Widget
     ];
 
     /**
-     * @var array the options for rendering the close button tag.
+     * @var array the options for rendering the close button tag
      */
     public $closeButton = [];
 
-
     /**
-     * @var boolean whether to removed flash messages during AJAX requests
+     * @var bool whether to removed flash messages during AJAX requests
      */
     public $isAjaxRemoveFlash = true;
-    
+
     /**
      * Initializes the widget.
      * This method will register the bootstrap asset bundle. If you override this method,
@@ -81,18 +81,17 @@ class Alert extends Widget
 
         $session = \Yii::$app->getSession();
         $flashes = $session->getAllFlashes();
-        $appendCss = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
+        $appendCss = isset($this->options['class']) ? ' '.$this->options['class'] : '';
 
         foreach ($flashes as $type => $data) {
             if (isset($this->alertTypes[$type])) {
                 $data = (array) $data;
                 foreach ($data as $message) {
-
-                    $this->options['class'] = $this->alertTypes[$type]['class'] . $appendCss;
-                    $this->options['id'] = $this->getId() . '-' . $type;
+                    $this->options['class'] = $this->alertTypes[$type]['class'].$appendCss;
+                    $this->options['id'] = $this->getId().'-'.$type;
 
                     echo BootstrapAlert::widget([
-                            'body' => $this->alertTypes[$type]['icon'] . $message,
+                            'body' => $this->alertTypes[$type]['icon'].$message,
                             'closeButton' => $this->closeButton,
                             'options' => $this->options,
                         ]);

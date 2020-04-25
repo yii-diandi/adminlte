@@ -1,12 +1,13 @@
 <?php
-
-/**
- * @Author: Wang Chunsheng 2192138785@qq.com
- * @Date:   2020-02-29 16:57:33
- * @Last Modified by:   Wang Chunsheng 2192138785@qq.com
- * @Last Modified time: 2020-03-30 19:39:34
+/***
+ * @开源软件: 店滴AI-基于AI的软硬件开源解决方案
+ * @官方地址: http://www.wayfirer.com/
+ * @版本: 1.0
+ * @邮箱: 2192138785@qq.com
+ * @作者: Wang Chunsheng
+ * @Date: 2020-03-29 02:08:38
+ * @LastEditTime: 2020-04-25 08:57:54
  */
-
 
 namespace diandi\adminlte;
 
@@ -39,8 +40,8 @@ class AdminLteAsset extends BaseAdminLteAsset
     public $depends = [
         'rmrevin\yii\fontawesome\AssetBundle',
         // 'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
+        'yii\bootstrap4\BootstrapAsset',
+        'yii\bootstrap4\BootstrapPluginAsset',
     ];
 
     /**
