@@ -8,8 +8,8 @@
 
 namespace diandi\adminlte;
 
-use yii\bootstrap4\Alert as BootstrapAlert;
-use yii\bootstrap4\Widget;
+use yii\bootstrap\Alert as BootstrapAlert;
+use yii\bootstrap\Widget;
 
 /**
  * Alert widget renders a message from session flash for AdminLTE alerts. All flash messages are displayed
