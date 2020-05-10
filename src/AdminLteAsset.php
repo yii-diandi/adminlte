@@ -1,4 +1,11 @@
 <?php
+/**
+ * @Author: Wang chunsheng  email:2192138785@qq.com
+ * @Date:   2020-05-03 07:10:17
+ * @Last Modified by:   Wang chunsheng  email:2192138785@qq.com
+ * @Last Modified time: 2020-05-08 12:12:20
+ */
+
 /***
  * @开源软件: 店滴AI-基于AI的软硬件开源解决方案
  * @官方地址: http://www.wayfirer.com/
@@ -31,6 +38,7 @@ class AdminLteAsset extends BaseAdminLteAsset
     ];
     public $js = [
         // 'plugins/jQuery/jquery-2.2.3.min.js',
+        'plugins/jQuery/jquery-migrate.js',
         'plugins/slimScroll/jquery.slimscroll.min.js',
         'plugins/fastclick/fastclick.js',
         'dist/js/app.js',
