@@ -4,7 +4,7 @@
  * @Author: Wang Chunsheng 2192138785@qq.com
  * @Date:   2020-03-30 17:51:53
  * @Last Modified by:   Wang chunsheng  email:2192138785@qq.com
- * @Last Modified time: 2020-05-10 15:39:49
+ * @Last Modified time: 2020-05-21 09:50:28
  */
 
 use richardfan\widget\JSRegister;
@@ -82,7 +82,7 @@ use yii\helpers\Html;
         'id'=>'iconinput'
     ]); ?>
     <div class="input-group-btn">
-        <button class=" btn-default btn" data-toggle="modal" href='#modal-id'>选择图标</button>
+        <button class=" btn-default btn" type="button" data-toggle="modal" href='#modal-id'>选择图标</button>
     </div>
 </div>
 
