@@ -4,9 +4,8 @@
  * @Author: Wang Chunsheng 2192138785@qq.com
  * @Date:   2020-03-30 17:51:53
  * @Last Modified by:   Wang chunsheng  email:2192138785@qq.com
- * @Last Modified time: 2020-05-21 09:50:28
+ * @Last Modified time: 2020-05-22 14:12:04
  */
-
 use richardfan\widget\JSRegister;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
@@ -76,10 +75,10 @@ use yii\helpers\Html;
 </style>
 
 <div class="input-group">
-    <span class="input-group-addon" id="iconyl"><?= $model->$attribute?:'*' ?></span>
+    <span class="input-group-addon" id="iconyl"><?= $model->$attribute ? "<i class='".$model->$attribute."'></i>" : '*'; ?></span>
     <?= Html::activeInput($type, $model, $attribute, [
         'class' => 'form-control',
-        'id'=>'iconinput'
+        'id' => 'iconinput',
     ]); ?>
     <div class="input-group-btn">
         <button class=" btn-default btn" type="button" data-toggle="modal" href='#modal-id'>选择图标</button>
@@ -107,16 +106,15 @@ use yii\helpers\Html;
             <li><a href="#new" data-toggle="tab">其他</a></li>
         </ul>',
             'toggleButton' => false,
-            'options'=>[
-                'id'=>'modal-id',
-                'style'=>'padding:0px;'
-                
+            'options' => [
+                'id' => 'modal-id',
+                'style' => 'padding:0px;',
             ],
             'size' => 'modal-lg',
-            'footer'=>'
+            'footer' => '
             当前选中图标：<span  id="dqxztb"></span>  
             <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary avatar-save" data-dismiss="modal">保存</button>'
+            <button type="button" class="btn btn-primary avatar-save" data-dismiss="modal">保存</button>',
         ]); ?>
          <div class="nav-tabs-custom">                               
                                 <div class="tab-content " style="height:200px;overflow: auto;">
@@ -4326,7 +4324,7 @@ use yii\helpers\Html;
         <?php Modal::end(); ?>
 
 <?php JSRegister::begin([
-        'id' => 'icons'
+        'id' => 'icons',
     ]);
 ?>
 <script>
