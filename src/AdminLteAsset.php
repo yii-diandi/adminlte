@@ -3,17 +3,7 @@
  * @Author: Wang chunsheng  email:2192138785@qq.com
  * @Date:   2020-05-03 07:10:17
  * @Last Modified by:   Wang chunsheng  email:2192138785@qq.com
- * @Last Modified time: 2020-05-08 12:12:20
- */
-
-/***
- * @开源软件: 店滴AI-基于AI的软硬件开源解决方案
- * @官方地址: http://www.wayfirer.com/
- * @版本: 1.0
- * @邮箱: 2192138785@qq.com
- * @作者: Wang Chunsheng
- * @Date: 2020-03-29 02:08:38
- * @LastEditTime: 2020-04-25 08:57:54
+ * @Last Modified time: 2020-05-24 08:33:31
  */
 
 namespace diandi\adminlte;
